@@ -36,7 +36,7 @@ export class Schlagwort {
     // https://typeorm.io/many-to-one-one-to-many-relations
     @ManyToOne(() => Monitor, (monitor) => monitor.schlagwoerter)
     // https://typeorm.io/relations#joincolumn-options
-    @JoinColumn({ name: 'buch_id' })
+    @JoinColumn({ name: 'monitor_id' })
     readonly monitor: Monitor | null | undefined;
 
     @Column('varchar')
