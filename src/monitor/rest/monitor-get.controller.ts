@@ -44,11 +44,11 @@ import {
     Res,
     UseInterceptors,
 } from '@nestjs/common';
+import { type Monitor, type RefreshRate } from '../entity/monitor.entity.js';
 import {
     MonitorReadService,
     type Suchkriterien,
 } from '../service/monitor-read.service.js';
-import { type Monitor } from '../entity/monitor.entity.js';
 import { Request, Response } from 'express';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
 import { getBaseUri } from './getBaseUri.js';
@@ -109,6 +109,9 @@ export class MonitorQuery implements Suchkriterien {
 
     @ApiProperty({ required: false })
     declare readonly curved: boolean;
+
+    @ApiProperty({ required: false })
+    declare readonly refreshRate: RefreshRate;
 
     @ApiProperty({ required: false })
     declare readonly highres: boolean;
@@ -266,7 +269,9 @@ export class MonitorGetController {
         );
         this.#logger.debug('find: monitoreModel=%o', monitoreModel);
 
-        const result: MonitoreModel = { _embedded: { monitore: monitoreModel } };
+        const result: MonitoreModel = {
+            _embedded: { monitore: monitoreModel },
+        };
         return res.json(result).send();
     }
 
@@ -296,6 +301,7 @@ export class MonitorGetController {
             preis: monitor.preis,
             bestand: monitor.bestand,
             curved: monitor.curved,
+            refreshRate: monitor.refreshRate,
             release: monitor.release,
             schlagwoerter,
             _links: links,

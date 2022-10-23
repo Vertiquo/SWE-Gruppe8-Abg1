@@ -116,6 +116,7 @@ export class MonitorMutationResolver {
             preis: monitorDTO.preis,
             bestand: monitorDTO.bestand,
             curved: monitorDTO.curved,
+            refreshRate: monitorDTO.refreshRate,
             release: monitorDTO.release,
             schlagwoerter: [],
             erzeugt: undefined,
