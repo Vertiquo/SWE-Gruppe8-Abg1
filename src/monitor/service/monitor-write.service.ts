@@ -265,8 +265,8 @@ export class MonitorWriteService {
 
         const monitore = await this.#readService.find({ name: name }); // eslint-disable-line object-shorthand
         if (monitore.length > 0) {
-            const [gefundenesMonitor] = monitore;
-            const { id } = gefundenesMonitor!; // eslint-disable-line @typescript-eslint/no-non-null-assertion
+            const [gefundenerMonitor] = monitore;
+            const { id } = gefundenerMonitor!; // eslint-disable-line @typescript-eslint/no-non-null-assertion
             this.#logger.debug('#checkNameExists: id=%s', id);
             return { type: 'NameExists', name, id: id! }; // eslint-disable-line @typescript-eslint/no-non-null-assertion
         }
