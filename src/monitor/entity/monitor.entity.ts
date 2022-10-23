@@ -52,7 +52,6 @@ import { DecimalTransformer } from './decimal-transformer.js';
 import { Schlagwort } from './schlagwort.entity.js';
 
 export type Refreshrate = '60' | '120' | '144' | '240';
-export type Resolution = '2k' | '4k' | '720p' | '1080p';
 
 @Entity()
 export class Monitor {
@@ -82,6 +81,10 @@ export class Monitor {
     @Column('boolean')
     @ApiProperty({ example: true, type: Boolean })
     readonly curved: boolean | undefined;
+
+    @Column('string')
+    @ApiProperty({ example: 60, type: String })
+    readonly refreshRate!: Refreshrate;
 
     @Column('date')
     @ApiProperty({ example: '2022-22-10' })
