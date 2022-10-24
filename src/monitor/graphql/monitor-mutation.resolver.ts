@@ -139,7 +139,7 @@ export class MonitorMutationResolver {
         switch (err.type) {
             case 'ConstraintViolations':
                 return err.messages.join(' ');
-            case 'TitelExists':
+            case 'NameExists':
                 return `Der Name "${err.name}" existiert bereits`;
             default:
                 return 'Unbekannter Fehler';
