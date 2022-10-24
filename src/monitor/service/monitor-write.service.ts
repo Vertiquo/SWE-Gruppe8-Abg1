@@ -197,12 +197,6 @@ export class MonitorWriteService {
             return { type: 'NameExists', name };
         }
 
-        const { hersteller } = monitor;
-        monitore = await this.#readService.find({ hersteller: hersteller }); // eslint-disable-line object-shorthand
-        if (monitore.length > 0) {
-            return { type: 'HerstellerExists', hersteller };
-        }
-
         this.#logger.debug('#validateCreate: ok');
         return undefined;
     }

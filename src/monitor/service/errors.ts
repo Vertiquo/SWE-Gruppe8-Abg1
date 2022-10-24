@@ -31,30 +31,21 @@ export interface ConstraintViolations {
 }
 
 /**
- * Klasse für einen bereits existierenden Titel.
+ * Klasse für einen bereits existierenden Namen.
  */
-export interface TitelExists {
-    readonly type: 'TitelExists';
-    readonly titel: string | null | undefined;
-    readonly id?: string;
-}
-
-/**
- * Klasse für eine bereits existierende ISBN-Nummer.
- */
-export interface IsbnExists {
-    readonly type: 'IsbnExists';
-    readonly isbn: string | null | undefined;
+export interface NameExists {
+    readonly type: 'NameExists';
+    readonly name: string | null | undefined;
     readonly id?: string;
 }
 
 /**
  * Union-Type für Fehler beim Neuanlegen eines Monitores:
  * - {@linkcode ConstraintViolations}
- * - {@linkcode IsbnExists}
- * - {@linkcode TitelExists}
+ * - {@linkcode HerstellerExists}
+ * - {@linkcode NameExists}
  */
-export type CreateError = ConstraintViolations | IsbnExists | TitelExists;
+export type CreateError = ConstraintViolations | NameExists;
 
 /**
  * Klasse für eine ungültige Versionsnummer beim Ändern.
@@ -90,9 +81,9 @@ export interface MonitorNotExists {
  * - {@linkcode VersionOutdated}
  */
 export type UpdateError =
-    | MonitorNotExists
     | ConstraintViolations
-    | TitelExists
+    | MonitorNotExists
+    | NameExists
     | VersionInvalid
     | VersionOutdated;
 
@@ -127,7 +118,7 @@ export interface InvalidContentType {
  * - {@linkcode MultipleFiles}
  */
 export type FileFindError =
-    | MonitorNotExists
     | FileNotFound
     | InvalidContentType
+    | MonitorNotExists
     | MultipleFiles;
