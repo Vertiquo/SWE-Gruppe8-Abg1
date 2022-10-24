@@ -34,7 +34,7 @@ export interface IdInput {
 export class MonitorQueryResolver {
     readonly #service: MonitorReadService;
 
-    readonly #logger: Logger<any> = getLogger(MonitorQueryResolver.name);
+    readonly #logger = getLogger(MonitorQueryResolver.name);
 
     constructor(service: MonitorReadService) {
         this.#service = service;
