@@ -54,7 +54,7 @@ type MonitorUpdateDTO = Omit<
 export class MonitorMutationResolver {
     readonly #service: MonitorWriteService;
 
-    readonly #logger: Logger<any> = getLogger(MonitorMutationResolver.name);
+    readonly #logger = getLogger(MonitorMutationResolver.name);
 
     constructor(service: MonitorWriteService) {
         this.#service = service;
@@ -65,7 +65,7 @@ export class MonitorMutationResolver {
     async create(@Args('input') monitorDTO: MonitorCreateDTO) {
         this.#logger.debug('create: monitorDTO=%o', monitorDTO);
 
-        const result: string | CreateError = await this.#service.create(
+        const result = await this.#service.create(
             this.#dtoToMonitor(monitorDTO),
         );
         this.#logger.debug('createMonitor: result=%o', result);
@@ -85,7 +85,7 @@ export class MonitorMutationResolver {
         this.#logger.debug('update: monitor=%o', monitor);
         const versionStr = `"${monitor.version?.toString()}"`;
 
-        const result: number | UpdateError = await this.#service.update(
+        const result = await this.#service.update(
             monitor.id,
             monitor as Monitor,
             versionStr,
@@ -100,9 +100,9 @@ export class MonitorMutationResolver {
     @Mutation()
     @Roles('admin')
     async delete(@Args() id: IdInput): Promise<boolean> {
-        const idStr: string = id.id;
+        const idStr = id.id;
         this.#logger.debug('delete: id=%s', idStr);
-        const result: boolean = await this.#service.delete(idStr);
+        const result = await this.#service.delete(idStr);
         this.#logger.debug('deleteMonitor: result=%s', result);
         return result;
     }
