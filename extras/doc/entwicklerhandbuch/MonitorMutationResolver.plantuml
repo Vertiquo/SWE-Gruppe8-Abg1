@@ -46,37 +46,37 @@ package security.auth {
   Roles .right.> Role
 }
 
-package buch #DDDDDD {
+package monitor #DDDDDD {
   package entity #FFFFFF {
-    class Buch <<entity>>
+    class Monitor <<entity>>
   }
 
   package service #FFFFFF {
-    class BuchWriteService << control >>
+    class MonitorWriteService << control >>
   }
 
-  class "type BuchDTO = Omit<Buch, 'aktualisiert' | 'erzeugt' | 'schlagwoerter'> & { schlagwoerter: string[] }" as BuchDTO
+  class "type MonitorDTO = Omit<Monitor, 'aktualisiert' | 'erzeugt' | 'schlagwoerter'> & { schlagwoerter: string[] }" as MonitorDTO
   hide BuchDTO circle
 
-  class BuchMutationResolver << control >> << @Resolver() >> << @UseGuards() >> << @UseInterceptors() >> {
-    + @Mutation() @Roles() async create(@Args() buch: Buch): Promise<string>
-    + @Mutation() @Roles() async update(@Args() buch: BuchDTO): Promise<number>
+  class MonitorMutationResolver << control >> << @Resolver() >> << @UseGuards() >> << @UseInterceptors() >> {
+    + @Mutation() @Roles() async create(@Args() monitor: Monitor): Promise<string>
+    + @Mutation() @Roles() async update(@Args() monitor: MonitorDTO): Promise<number>
     + @Mutation() @Roles() async delete(@Args() id: string): Promise<boolean>
   }
 
-  BuchMutationResolver o-down-> "1" BuchWriteService : service
+  MonitorMutationResolver o-down-> "1" MonitorWriteService : service
 
-  BuchMutationResolver ..> Buch
-  BuchMutationResolver ..> BuchDTO
-  BuchDTO .up.> Buch
-  BuchMutationResolver ..> Promise
-  BuchMutationResolver ..> Resolver
+  MonitorMutationResolver ..> Monitor
+  MonitorMutationResolver ..> MonitorDTO
+  MonitorDTO .up.> Monitor
+  MonitorMutationResolver ..> Promise
+  MonitorMutationResolver ..> Resolver
 
-  BuchMutationResolver .up.> Roles
-  BuchMutationResolver .up.> Role
+  MonitorMutationResolver .up.> Roles
+  MonitorMutationResolver .up.> Role
 
-  BuchDTO .[hidden].> Promise
-  BuchDTO .[hidden].> Resolver
+  MonitorDTO .[hidden].> Promise
+  MonitorDTO .[hidden].> Resolver
 }
 
 hide empty members
