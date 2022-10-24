@@ -1,20 +1,20 @@
 /* eslint-disable max-lines */
 /*
-* Copyright (C) 2016 - present Juergen Zimmermann, Hochschule Karlsruhe
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ * Copyright (C) 2016 - present Juergen Zimmermann, Hochschule Karlsruhe
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 
 /**
  * Das Modul besteht aus der Klasse {@linkcode MonitorWriteService} für die
@@ -22,7 +22,6 @@
  * @packageDocumentation
  */
 
-import { Monitor } from '../entity/monitor.entity.js';
 import {
     type CreateError,
     type MonitorNotExists,
@@ -32,11 +31,12 @@ import {
     type VersionOutdated,
 } from './errors.js';
 import { type DeleteResult, Repository } from 'typeorm';
-import { MonitorReadService } from './monitor-read.service.js';
-import { MonitorValidationService } from './monitor-validation.service.js';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { MailService } from '../../mail/mail.service.js';
+import { Monitor } from '../entity/monitor.entity.js';
+import { MonitorReadService } from './monitor-read.service.js';
+import { MonitorValidationService } from './monitor-validation.service.js';
 import RE2 from 're2';
 import { Schlagwort } from '../entity/schlagwort.entity.js';
 import { getLogger } from '../../logger/logger.js';
@@ -192,7 +192,7 @@ export class MonitorWriteService {
         }
 
         const { name } = monitor;
-        let monitore = await this.#readService.find({ name: name }); // eslint-disable-line object-shorthand
+        const monitore = await this.#readService.find({ name: name }); // eslint-disable-line object-shorthand
         if (monitore.length > 0) {
             return { type: 'NameExists', name };
         }
