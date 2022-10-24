@@ -21,13 +21,13 @@ import {
 } from '@nestjs/common';
 import { ApolloDriver } from '@nestjs/apollo';
 import { AuthModule } from './security/auth/auth.module.js';
-import { MonitorGetController } from './monitor/rest/monitor-get.controller.js';
-import { MonitorModule } from './monitor/monitor.module.js';
-import { MonitorWriteController } from './monitor/rest/monitor-write.controller.js';
 import { DevModule } from './config/dev/dev.module.js';
 import { GraphQLModule } from '@nestjs/graphql';
 import { HealthModule } from './health/health.module.js';
 import { LoggerModule } from './logger/logger.module.js';
+import { MonitorGetController } from './monitor/rest/monitor-get.controller.js';
+import { MonitorModule } from './monitor/monitor.module.js';
+import { MonitorWriteController } from './monitor/rest/monitor-write.controller.js';
 import { RequestLoggerMiddleware } from './logger/request-logger.middleware.js';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { graphQlConfig } from './config/graphql.js';
