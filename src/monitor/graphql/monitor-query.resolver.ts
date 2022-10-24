@@ -31,7 +31,7 @@ export interface IdInput {
 
 @Resolver()
 @UseInterceptors(ResponseTimeInterceptor)
-export class MonitorhQueryResolver {
+export class MonitorQueryResolver {
     readonly #service: MonitorReadService;
 
     readonly #logger: Logger<any> = getLogger(MonitorQueryResolver.name);
