@@ -37,47 +37,45 @@ package mail {
   class MailService
 }
 
-package buch {
+package monitor {
   package entity {
-    class Buch
+    class Monitor
   }
 
   package service #DDDDDD {
-    class BuchInvalid
-    class TitelExists
-    class IsbnExists
+    class MonitorInvalid
+    class NameExists
     class VersionInvalid
     class VersionOutdated
 
-    class BuchWriteService << control >> <<@Injectable()>> {
-      + async create(buch: Buch): Promise<string|BuchInvalid|TitelExists|IsbnExists>
-      + async update(id: string, buch: Buch, version: string): Promise<number|BuchInvalid|TitelExists|IsbnExists|VersionInvalid|VersionOutdated>
+    class MonitorWriteService << control >> <<@Injectable()>> {
+      + async create(monitor: Monitor): Promise<string|MonitorInvalid|NameExists>
+      + async update(id: string, monitor: Monitor, version: string): Promise<number|MonitorInvalid|NameExists|VersionInvalid|VersionOutdated>
       + async delete(id: string): Promise<boolean>
     }
 
-    BuchWriteService o--> "1" BuchValidationService: validationService
-    BuchWriteService o--> "1" BuchReadService: readService
-    BuchWriteService o--> "1" Repository: @InjectRepository repo
-    BuchWriteService o--> "1" MailService: mailService
+    MonitorWriteService o--> "1" MonitorValidationService: validationService
+    MonitorWriteService o--> "1" MonitorReadService: readService
+    MonitorWriteService o--> "1" Repository: @InjectRepository repo
+    MonitorWriteService o--> "1" MailService: mailService
 
-    BuchWriteService .up.> Injectable
-    BuchWriteService .up.> InjectRepository
+    MonitorWriteService .up.> Injectable
+    MonitorWriteService .up.> InjectRepository
 
-    BuchWriteService .up.> Promise
-    BuchWriteService ..> Buch
-    BuchWriteService .up.> BuchInvalid
-    BuchWriteService .up.> TitelExists
-    BuchWriteService .up.> IsbnExists
-    BuchWriteService .up.> VersionInvalid
-    BuchWriteService .up.> VersionOutdated
+    MonitorWriteService .up.> Promise
+    MonitorWriteService ..> Monitor
+    MonitorWriteService .up.> MonitorInvalid
+    MonitorWriteService .up.> NameExists
+    MonitorWriteService .up.> VersionInvalid
+    MonitorWriteService .up.> VersionOutdated
 
-    BuchInvalid .up[hidden].> Buch
-    Buch .up[hidden].> Promise
-    Buch .up[hidden].> Injectable
-    Buch .up[hidden].> InjectRepository
-    TitelExists .up[hidden].> Buch
-    BuchValidationService .[hidden].> Repository
-    BuchValidationService .[hidden].> MailService
+    MonitorInvalid .up[hidden].> Monitor
+    Monitor .up[hidden].> Promise
+    Monitor .up[hidden].> Injectable
+    Monitor .up[hidden].> InjectRepository
+    NameExists .up[hidden].> Monitor
+    MonitorValidationService .[hidden].> Repository
+    MonitorValidationService .[hidden].> MailService
   }
 }
 
