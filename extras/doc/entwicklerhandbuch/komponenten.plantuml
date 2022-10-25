@@ -25,12 +25,12 @@ actor GraphQLClient
 node "Nest" {
   [RequestLoggerMiddleware]
 
-  [BuchController]
-  [BuchResolver]
+  [MonitorController]
+  [MonitorResolver]
 
-  [BuchService]
+  [MonitorService]
 
-  [Repository<Buch>]
+  [Repository<Monitor>]
 
   [MailService]
 }
@@ -44,8 +44,8 @@ cloud {
     [nodemailer]
 }
 
-database "DB buch" {
-    [Tabelle buch]
+database "DB monitor" {
+    [Tabelle monitor]
     [Tabelle schlagwort]
 }
 
@@ -56,18 +56,18 @@ node {
 RESTClient ~~> [RequestLoggerMiddleware]
 GraphQLClient ~~> [RequestLoggerMiddleware]
 
-[RequestLoggerMiddleware] ~~> [BuchController]
-[RequestLoggerMiddleware] ~~> [BuchResolver]
+[RequestLoggerMiddleware] ~~> [MonitorController]
+[RequestLoggerMiddleware] ~~> [MonitorResolver]
 
-[BuchController] ..> [BuchService]
-[BuchResolver] ..> [BuchService]
-[BuchService] ..> [Repository<Buch>]
+[MonitorController] ..> [MonitorService]
+[MonitorResolver] ..> [MonitorService]
+[MonitorService] ..> [Repository<Monitor>]
 
-[Repository<Buch>] ~~> [TypeORM]
-[TypeORM] ~~> [Tabelle buch]
+[Repository<Monitor>] ~~> [TypeORM]
+[TypeORM] ~~> [Tabelle monitor]
 [TypeORM] ~~> [Tabelle schlagwort]
 
-[BuchService] ..> [MailService]
+[MonitorService] ..> [MailService]
 [MailService] ~~> [nodemailer]
 [nodemailer] ~~> [Mailserver]
 
