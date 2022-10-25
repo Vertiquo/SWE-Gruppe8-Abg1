@@ -49,37 +49,37 @@ package express {
   Response .[hidden].> Controller
 }
 
-package buch {
+package monitor {
   package entity #FFFFFF {
-    class Buch <<entity>>
+    class Monitor <<entity>>
 
-    Buch .[hidden].> Promise
-    Buch .[hidden].> Request
+    Monitor .[hidden].> Promise
+    Monitor .[hidden].> Request
   }
 
   package service {
-    class BuchReadService << control >>
+    class MonitorReadService << control >>
   }
 
   package rest #DDDDDD {
-    BuchQuery -up-|> Buch
+    MonitorQuery -up-|> Monitor
 
-    class BuchGetController << control >> << @Controller() >> << @UseGuards() >> << @UseInterceptors() >> {
-      + @Get() async findById(@Param() id: string, @Req() req: Request, @Headers() version: string, @Res() res: Response): Promise<Response<BuchModel | undefined>>
-      + @Get() async find(@Query() query: BuchQuery, @Req() req: Request,  @Res() res: Response): Promise<Response<BuecherModel | undefined>>
+    class MonitorGetController << control >> << @Controller() >> << @UseGuards() >> << @UseInterceptors() >> {
+      + @Get() async findById(@Param() id: string, @Req() req: Request, @Headers() version: string, @Res() res: Response): Promise<Response<MonitorModel | undefined>>
+      + @Get() async find(@Query() query: MonitorQuery, @Req() req: Request,  @Res() res: Response): Promise<Response<BuecherModel | undefined>>
     }
 
-    BuchGetController o--> "1" BuchReadService : service
+    MonitorGetController o--> "1" MonitorReadService : service
 
-    BuchGetController ..> Controller
-    BuchGetController ..> Request
-    BuchGetController ..> Response
-    BuchGetController ..> Promise
-    BuchGetController .up.> BuchModel
-    BuchGetController .up.> BuchQuery
+    MonitorGetController ..> Controller
+    MonitorGetController ..> Request
+    MonitorGetController ..> Response
+    MonitorGetController ..> Promise
+    MonitorGetController .up.> MonitorModel
+    MonitorGetController .up.> MonitorQuery
 
-    BuchReadService .[hidden].> Request
-    BuchReadService .[hidden].> Promise
+    MonitorReadService .[hidden].> Request
+    MonitorReadService .[hidden].> Promise
     Response .right[hidden].> Controller
   }
 }
