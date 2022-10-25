@@ -71,6 +71,7 @@ input MonitorUpdateInput {
   preis: Float
   bestand: Int
   curved: Boolean
+  refreshRate: RefreshRate
   release: String
   schlagwoerter: [String]
 }
