@@ -21,15 +21,15 @@ actor Gast
 actor Admin
 actor Kunde
 
-rectangle buch {
-    Gast --> (Buch suchen)
-    Admin --> (Buch suchen)
-    Admin --> (Buch anlegen)
-    Admin --> (Buch ändern)
-    Admin --> (Buch löschen)
-    Kunde --> (Buch suchen)
-    Kunde --> (Buch anlegen)
-    Kunde --> (Buch ändern)
+rectangle monitor {
+    Gast --> (Monitor suchen)
+    Admin --> (Monitor suchen)
+    Admin --> (Monitor anlegen)
+    Admin --> (Monitor ändern)
+    Admin --> (Monitor löschen)
+    Kunde --> (Monitor suchen)
+    Kunde --> (Monitor anlegen)
+    Kunde --> (Monitor ändern)
 }
 
 footer (c) Jürgen Zimmermann
