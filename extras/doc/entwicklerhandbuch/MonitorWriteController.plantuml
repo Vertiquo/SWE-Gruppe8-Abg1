@@ -81,42 +81,42 @@ package security.auth {
   Roles .right.> Role
 }
 
-package buch {
+package monitor {
   package entity #FFFFFF {
-    class Buch <<entity>>
+    class Monitor <<entity>>
 
-    Buch .[hidden].> Promise
-    Buch .[hidden].> Request
+    Monitor .[hidden].> Promise
+    Monitor .[hidden].> Request
   }
 
   package service {
-    class BuchWriteService << control >>
-    class BuchReadService << control >>
+    class MonitorWriteService << control >>
+    class MonitorReadService << control >>
   }
 
   package rest #DDDDDD {
-    class BuchWriteController << control >> << @Controller() >> << @UseGuards() >> << @UseInterceptors() >> {
-      + @Post() @Roles() async create(@Body() buch: Buch, @Req() req: Request,  @Res() res: Response): Promise<Response>
-      + @Put() @Roles() async update(@Body() buch: Buch, @Param() id: string, @Headers() version: string, @Res() res: Response): Promise<Response>
+    class MonitorWriteController << control >> << @Controller() >> << @UseGuards() >> << @UseInterceptors() >> {
+      + @Post() @Roles() async create(@Body() monitor: Monitor, @Req() req: Request,  @Res() res: Response): Promise<Response>
+      + @Put() @Roles() async update(@Body() monitor: Monitor, @Param() id: string, @Headers() version: string, @Res() res: Response): Promise<Response>
       + @Delete() @Roles() async delete(@Param() id: string, @Res() res: Response): Promise<Response>
     }
 
-    BuchWriteController o--> "1" BuchWriteService : service
-    BuchWriteController o--> "1" BuchReadService : readService
-    BuchWriteController ..up> Buch
+    MonitorWriteController o--> "1" MonitorWriteService : service
+    MonitorWriteController o--> "1" MonitorReadService : readService
+    MonitorWriteController ..up> Monitor
 
-    BuchWriteController ..> Controller
+    MonitorWriteController ..> Controller
 
-    BuchWriteController .up.> Roles
-    BuchWriteController .up.> Role
+    MonitorWriteController .up.> Roles
+    MonitorWriteController .up.> Role
 
-    BuchWriteController ..> Request
-    BuchWriteController ..> Response
-    BuchWriteController ..> Promise
+    MonitorWriteController ..> Request
+    MonitorWriteController ..> Response
+    MonitorWriteController ..> Promise
 
-    Buch .up[hidden].> Roles
-    BuchWriteService .[hidden].> Request
-    BuchWriteService .[hidden].> Promise
+    Monitor .up[hidden].> Roles
+    MonitorWriteService .[hidden].> Request
+    MonitorWriteService .[hidden].> Promise
   }
 }
 
