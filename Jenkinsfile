@@ -197,14 +197,14 @@ pipeline {
 
                 success {
                     script {
-                        if (fileExists("${env.WORKSPACE}/buch.zip")) {
-                            sh 'rm buch.zip'
+                        if (fileExists("${env.WORKSPACE}/monitor.zip")) {
+                            sh 'rm monitor.zip'
                         }
                     }
                     // https://www.jenkins.io/doc/pipeline/steps/pipeline-utility-steps/#zip-create-zip-file
-                    zip zipFile: 'buch.zip', archive: false, dir: 'dist'
+                    zip zipFile: 'monitor.zip', archive: false, dir: 'dist'
                     // jobs/buch/builds/.../archive/buch.zip
-                    archiveArtifacts 'buch.zip'
+                    archiveArtifacts 'monitor.zip'
                 }
             }
         }
