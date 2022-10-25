@@ -36,25 +36,19 @@ package typeorm {
   hide UpdateDateColumn circle
 }
 
-package buch.entity {
-  class "type BuchArt = 'KINDLE' | 'DRUCKAUSGABE'" as BuchArt
-  hide BuchArt circle
+package monitor.entity {
+  class "type RefreshRate = 60 | 120 | 144 | 240" as RefreshRate
+  hide RefreshRate circle
 
-  class "type Verlag = 'FOO_VERLAG' | 'BAR_VERLAG'" as Verlag
-  hide Verlag circle
-
-  class Buch <<entity>> <<@Entity>> {
+  class Monitor <<entity>> <<@Entity>> {
     @Column() @PrimaryColumn() readonly id: string
-    @Column() readonly titel: string
-    @Column() readonly rating: number
-    @Column() readonly art: BuchArt
-    @Column() readonly verlag: Verlag
+    @Column() readonly name: string
+    @Column() readonly hersteller: string
     @Column() readonly preis: number
-    @Column() readonly rabatt: number
-    @Column() readonly lieferbar: boolean
-    @Column() readonly datum: Date
-    @Column() readonly isbn: string
-    @Column() readonly homepage?: string
+    @Column() readonly bestand: number
+    @Column() readonly curved: boolean
+    @Column() readonly refreshrate: RefreshRate
+    @Column() readonly release: string
     @CreateDateColumn() readonly erzeugt: Date
     @UpdateDateColumn() readonly aktualisiert: Date
   }
@@ -62,15 +56,12 @@ package buch.entity {
   class Schlagwort <<entity>> <<@Entity>> {
     @Column() @PrimaryColumn() readonly id: string
     @Column() readonly schlagwort: string
-    @ManyToOne() readonly buch: Buch
+    @ManyToOne() readonly monitor: Monitor
   }
 
-  Buch ..> Entity
-  Buch *--> "*" Schlagwort : @OneToMany() schlagwoerter
-  Buch .up.> BuchArt
-  Buch .up.> Verlag
-
-  BuchArt .[hidden].> Verlag
+  Monitor ..> Entity
+  Monitor *--> "*" Schlagwort : @OneToMany() schlagwoerter
+  Monitor .up.> RefreshRate
 }
 
 hide empty members
