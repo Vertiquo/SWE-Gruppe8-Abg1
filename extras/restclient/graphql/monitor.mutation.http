@@ -66,17 +66,14 @@ X-REQUEST-TYPE: GraphQL
 mutation {
   create(
     input: {
-      titel: "Testgraphql",
-      rating: 1,
-      art: KINDLE,
-      verlag: FOO_VERLAG,
+      name: "MonGraphQL",
+      hersteller: "HerGraphQL",
       preis: 99.9,
-      rabatt: 0.1,
-      lieferbar: true,
-      datum: "2022-01-31",
-      isbn: "3897225832",
-      homepage: "http://test.de/",
-      schlagwoerter: ["JAVASCRIPT"]
+      bestand: 2,
+      curved: true,
+      refreshRate: "60",
+      release: "2022-01-31",
+      schlagwoerter: ["highres"]
     }
   )
 }
@@ -90,17 +87,14 @@ X-REQUEST-TYPE: GraphQL
 mutation {
   create(
     input: {
-      titel: "?!$",
-      rating: 999,
-      art: KINDLE,
-      verlag: FOO_VERLAG,
+      name: "???",
+      hersteller: "!!!",
       preis: -999,
-      rabatt: 999,
-      lieferbar: true,
-      datum: "123",
-      isbn: "123",
-      homepage: "?!$",
-      schlagwoerter: ["JAVASCRIPT"]
+      bestand: 0.1,
+      curved: true,
+      refreshRate: "61",
+      release: "123",
+      schlagwoerter: ["highres"]
     }
   )
 }
@@ -115,17 +109,14 @@ mutation {
   update(
     input: {
       id: "00000000-0000-0000-0000-000000000003",
-      version: 0,
-      titel: "Geaendertgraphql",
-      rating: 5,
-      art: DRUCKAUSGABE,
-      verlag: FOO_VERLAG,
-      preis: 99.99,
-      rabatt: 0.099,
-      lieferbar: false,
-      datum: "2022-02-01",
-      isbn: "9780201633610",
-      homepage: "https://test.graphql/"
+      name: "ChngMonGraphQL",
+      hersteller: "ChngHerGraphQL",
+      preis: 77.7,
+      bestand: 7,
+      curved: true,
+      refreshRate: "120",
+      release: "2022-02-02",
+      schlagwoerter: ["highres"]
     }
   )
 }
@@ -140,17 +131,14 @@ mutation {
   update(
     input: {
       id: "00000000-0000-0000-0000-000000000003",
-      version: 0,
-      titel: "?!$",
-      rating: 999,
-      art: KINDLE,
-      verlag: FOO_VERLAG,
-      preis: -999,
-      rabatt: 999,
-      lieferbar: false,
-      datum: "123",
-      isbn: "123",
-      homepage: "?!$"
+      name: "???",
+      hersteller: "!!!",
+      preis: -800,
+      bestand: 9.8,
+      curved: true,
+      refreshRate: "123",
+      release: "321",
+      schlagwoerter: ["highres"]
     }
   )
 }
@@ -165,17 +153,14 @@ mutation {
   update(
     input: {
       id: "99999999-9999-9999-9999-999999999999",
-      version: 0,
-      titel: "Nichtvorhanden",
-      rating: 5,
-      art: DRUCKAUSGABE,
-      verlag: FOO_VERLAG,
-      preis: 99.99,
-      rabatt: 0.099,
-      lieferbar: false,
-      datum: "2022-02-01",
-      isbn: "9780201633610",
-      homepage: "https://test.de/"
+      name: "ChngMonGraphQL",
+      hersteller: "ChngHerGraphQL",
+      preis: 77.7,
+      bestand: 7,
+      curved: true,
+      refreshRate: "120",
+      release: "2022-02-02",
+      schlagwoerter: ["highres"]
     }
   )
 }

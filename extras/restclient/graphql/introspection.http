@@ -32,13 +32,13 @@ X-REQUEST-TYPE: GraphQL
   }
 }
 
-### Details zum Typ "Buch": Felder und deren Typen
+### Details zum Typ "Monitor": Felder und deren Typen
 POST {{graphQlUrl}}
 Content-Type: application/json
 X-REQUEST-TYPE: GraphQL
 
 {
-  __type(name: "Buch") {
+  __type(name: "Monitor") {
     name
     kind
     description
@@ -57,13 +57,13 @@ X-REQUEST-TYPE: GraphQL
   }
 }
 
-### Details zum Enum-Typ "Art"
+### Details zum Enum-Typ "RefreshRate"
 POST {{graphQlUrl}}
 Content-Type: application/json
 X-REQUEST-TYPE: GraphQL
 
 {
-  __type(name: "Art") {
+  __type(name: "RefreshRate") {
     name
     kind
     description
