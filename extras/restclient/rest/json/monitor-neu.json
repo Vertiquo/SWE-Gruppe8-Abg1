@@ -1,0 +1,9 @@
+{
+  "name": "NewRest",
+  "hersteller": "MyHersteller",
+  "preis": 199.99,
+  "bestand": 15,
+  "curved": true,
+  "refreshRate": 144,
+  "release": "2022-01-31"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "ChngRest",
+  "hersteller": "MyHersteller",
+  "preis": 99.99,
+  "bestand": 5,
+  "curved": true,
+  "refreshRate": 144,
+  "release": "2022-01-31"
+}
