@@ -19,30 +19,30 @@
 
 // siehe auch https://studio.apollographql.com/sandbox/explorer
 
-### Suche id, titel, art und version von allen Buechern
+### Suche id, name, art und version von allen Monitoren
 POST {{graphQlUrl}}
 Content-Type: application/json
 X-REQUEST-TYPE: GraphQL
 
 {
-  buecher {
+  monitore {
     id
-    titel
-    art
+    name
+    refreshRate
     version
   }
 }
 
-### Suche titel, art, isbn und version von einem Buch mit vorhandener Buch-ID
+### Suche name, refreshRate, hersteller und version von einem Monitor mit vorhandener Monitor-ID
 POST {{graphQlUrl}}
 Content-Type: application/json
 X-REQUEST-TYPE: GraphQL
 
 query ($id: ID! = "00000000-0000-0000-0000-000000000001") {
-  buch(id: $id) {
-    titel
-    art
-    isbn
+  monitor(id: $id) {
+    name
+    refreshRate
+    hersteller
     version
   }
 }
@@ -51,14 +51,14 @@ query ($id: ID! = "00000000-0000-0000-0000-000000000001") {
   "id": "00000000-0000-0000-0000-000000000001"
 }
 
-### Suche titel von einem Buch mit nicht-vorhandener Buch-ID
+### Suche name von einem Monitor mit nicht-vorhandener Monitor-ID
 POST {{graphQlUrl}}
 Content-Type: application/json
 X-REQUEST-TYPE: GraphQL
 
 query ($id: ID! = "99999999-9999-9999-9999-999999999999") {
-  buch(id: $id) {
-    titel
+  monitor(id: $id) {
+    name
   }
 }
 
@@ -66,49 +66,49 @@ query ($id: ID! = "99999999-9999-9999-9999-999999999999") {
   "id": "99999999-9999-9999-9999-999999999999"
 }
 
-### Suche art von Buechern mit vorhandenem Titel
+### Suche refreshRate von Monitoren mit vorhandenem Titel
 POST {{graphQlUrl}}
 Content-Type: application/json
 X-REQUEST-TYPE: GraphQL
 
-query ($titel: String = "Alpha") {
-  buecher(titel: $titel) {
-    art
+query ($name: String = "Alpha") {
+  monitore(name: $name) {
+    refreshRate
   }
 }
 
 {
-  "titel": "Alpha"
+  "name": "Alpha"
 }
 
-### Suche titel, art und schlagwoerter von Buechern mit vorhandenem Titel
+### Suche name, art und schlagwoerter von Monitoren mit vorhandenem Titel
 POST {{graphQlUrl}}
 Content-Type: application/json
 X-REQUEST-TYPE: GraphQL
 
-query ($titel: String = "a") {
-  buecher(titel: $titel) {
-    titel
+query ($name: String = "a") {
+  monitore(name: $name) {
+    name
     art
     schlagwoerter
   }
 }
 
 {
-  "titel": "a"
+  "name": "a"
 }
 
-### Suche art von Buechern mit NICHT-vorhandenem Titel
+### Suche refreshRate von Monitoren mit NICHT-vorhandenem Titel
 POST {{graphQlUrl}}
 Content-Type: application/json
 X-REQUEST-TYPE: GraphQL
 
-query ($titel: String = "Nichtvorhanden") {
-  buecher(titel: $titel) {
-    art
+query ($name: String = "Nichtvorhanden") {
+  monitore(name: $name) {
+    refreshRate
   }
 }
 
 {
-  "titel": "Nichtvorhanden"
+  "name": "Nichtvorhanden"
 }
