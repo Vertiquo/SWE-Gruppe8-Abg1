@@ -81,9 +81,7 @@ export const jsonSchema: GenericJsonSchema = {
             curved: "Das Attribut 'curved' muss ein boolean Wert (true/false) sein.",
             refreshRate:
                 'Die Bildwiederholungsfrequenz muss einer der folgenden Werte sein: (60 | 120 |144 | 240).',
-            datum: 'Das Datum muss im Format yyyy-MM-dd sein.',
-            isbn: 'Die ISBN-Nummer ist nicht korrekt.',
-            homepage: 'Die Homepage ist nicht korrekt.',
+            release: 'Das Releasedatum muss im Format yyyy-MM-dd sein.',
         },
     },
 };
