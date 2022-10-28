@@ -24,52 +24,44 @@ import {
     shutdownServer,
     startServer,
 } from '../testserver.js';
-import { type BuchDTO } from '../../src/buch/rest/buch-write.controller.js';
 import { HttpStatus } from '@nestjs/common';
-import { ID_PATTERN } from '../../src/buch/service/buch-validation.service.js';
-import { MAX_RATING } from '../../src/buch/service/jsonSchema.js';
+import { ID_PATTERN } from '../../src/monitor/service/monitor-validation.service.js';
+import { MAX_RATING } from '../../src/monitor/service/jsonSchema.js';
+import { type MonitorDTO } from '../../src/monitor/rest/monitor-write.controller.js';
 import { loginRest } from '../login.js';
 
 // -----------------------------------------------------------------------------
 // T e s t d a t e n
 // -----------------------------------------------------------------------------
-const neuesBuch: BuchDTO = {
-    titel: 'Testrest',
-    rating: 1,
-    art: 'DRUCKAUSGABE',
-    verlag: 'FOO_VERLAG',
+const neuerMonitor: MonitorDTO = {
+    name: 'Testrest',
+    hersteller: 'MyHersteller',
     preis: 99.99,
-    rabatt: 0.099,
-    lieferbar: true,
-    datum: '2022-02-28',
-    isbn: '9780007006441',
-    homepage: 'https://test.de/',
-    schlagwoerter: ['JAVASCRIPT', 'TYPESCRIPT'],
+    bestand: 5,
+    curved: true,
+    refreshRate: '144',
+    release: '2022-01-31',
+    schlagwoerter: ['highres', 'slim'],
 };
-const neuesBuchInvalid: Record<string, unknown> = {
-    titel: '!?$',
-    rating: -1,
-    art: 'UNSICHTBAR',
-    verlag: 'NO_VERLAG',
-    preis: 0,
-    rabatt: 2,
-    lieferbar: true,
-    datum: '12345123123',
-    isbn: 'falsche-ISBN',
+const neuerMonitorInvalid: Record<string, unknown> = {
+    name: '!?$',
+    hersteller: '!!!',
+    preis: -100.99,
+    bestand: 1.2,
+    curved: true,
+    refreshRate: '144',
+    release: '123456123456',
     schlagwoerter: [],
 };
-const neuesBuchTitelExistiert: BuchDTO = {
-    titel: 'Alpha',
-    rating: 1,
-    art: 'DRUCKAUSGABE',
-    verlag: 'FOO_VERLAG',
-    preis: 99.99,
-    rabatt: 0.099,
-    lieferbar: true,
-    datum: '2022-02-28',
-    isbn: '9780007097326',
-    homepage: 'https://test.de/',
-    schlagwoerter: ['JAVASCRIPT', 'TYPESCRIPT'],
+const neuerMonitorNameExistiert: MonitorDTO = {
+    name: 'Alpha',
+    hersteller: 'AlphaHersteller',
+    preis: 79.99,
+    bestand: 7,
+    curved: false,
+    refreshRate: '120',
+    release: '2022-01-31',
+    schlagwoerter: ['highres', 'slim'],
 };
 
 // -----------------------------------------------------------------------------
@@ -100,7 +92,7 @@ describe('POST /', () => {
         await shutdownServer();
     });
 
-    test('Neues Buch', async () => {
+    test('Neuer Monitor', async () => {
         // given
         const token = await loginRest(client);
         headers.Authorization = `Bearer ${token}`;
@@ -108,7 +100,7 @@ describe('POST /', () => {
         // when
         const response: AxiosResponse<string> = await client.post(
             '/',
-            neuesBuch,
+            neuerMonitor,
             { headers },
         );
 
@@ -134,7 +126,7 @@ describe('POST /', () => {
         expect(data).toBe('');
     });
 
-    test('Neues Buch mit ungueltigen Daten', async () => {
+    test('Neuer Monitor mit ungueltigen Daten', async () => {
         // given
         const token = await loginRest(client);
         headers.Authorization = `Bearer ${token}`;
@@ -142,7 +134,7 @@ describe('POST /', () => {
         // when
         const response: AxiosResponse<string> = await client.post(
             '/',
-            neuesBuchInvalid,
+            neuerMonitorInvalid,
             { headers },
         );
 
@@ -152,18 +144,17 @@ describe('POST /', () => {
         expect(status).toBe(HttpStatus.UNPROCESSABLE_ENTITY);
         expect(data).toEqual(
             expect.arrayContaining([
-                'Ein Buchtitel muss mit einem Buchstaben, einer Ziffer oder _ beginnen.',
-                `Eine Bewertung muss zwischen 0 und ${MAX_RATING} liegen.`,
-                'Die Art eines Buches muss KINDLE oder DRUCKAUSGABE sein.',
-                'Der Verlag eines Buches muss FOO_VERLAG oder BAR_VERLAG sein.',
-                'Der Rabatt muss ein Wert zwischen 0 und 1 sein.',
-                'Das Datum muss im Format yyyy-MM-dd sein.',
-                'Die ISBN-Nummer ist nicht korrekt.',
+                'Der Monitorname muss mit einem Buchstaben, einer Ziffer oder _ beginnen.',
+                'Der Herstellername muss mit einem Buchstaben, einer Ziffer oder _ beginnen.',
+                'Der Preis darf nicht negativ sein.',
+                'Der Bestand darf nicht negativ sein.',
+                'Die Bildwiederholungsfrequenz muss einer der folgenden Werte sein: (60 | 120 |144 | 240).',
+                'Das Releasedatum muss im Format yyyy-MM-dd sein.',
             ]),
         );
     });
 
-    test('Neues Buch, aber der Titel existiert bereits', async () => {
+    test('Neuer Monitor, aber der Name existiert bereits', async () => {
         // given
         const token = await loginRest(client);
         headers.Authorization = `Bearer ${token}`;
@@ -171,7 +162,7 @@ describe('POST /', () => {
         // when
         const response: AxiosResponse<string> = await client.post(
             '/',
-            neuesBuchTitelExistiert,
+            neuerMonitorNameExistiert,
             { headers },
         );
 
@@ -179,14 +170,14 @@ describe('POST /', () => {
         const { status, data } = response;
 
         expect(status).toBe(HttpStatus.UNPROCESSABLE_ENTITY);
-        expect(data).toEqual(expect.stringContaining('Titel'));
+        expect(data).toEqual(expect.stringContaining('Name'));
     });
 
-    test('Neues Buch, aber ohne Token', async () => {
+    test('Neuer Monitor, aber ohne Token', async () => {
         // when
         const response: AxiosResponse<Record<string, any>> = await client.post(
             '/',
-            neuesBuch,
+            neuerMonitor,
         );
 
         // then
@@ -196,7 +187,7 @@ describe('POST /', () => {
         expect(data.statusCode).toBe(HttpStatus.FORBIDDEN);
     });
 
-    test('Neues Buch, aber mit falschem Token', async () => {
+    test('Neuer Monitor, aber mit falschem Token', async () => {
         // given
         const token = 'FALSCH';
         headers.Authorization = `Bearer ${token}`;
@@ -204,7 +195,7 @@ describe('POST /', () => {
         // when
         const response: AxiosResponse<Record<string, any>> = await client.post(
             '/',
-            neuesBuch,
+            neuerMonitor,
             { headers },
         );
 
