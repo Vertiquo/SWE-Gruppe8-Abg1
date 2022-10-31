@@ -37,7 +37,7 @@ package typeorm {
 }
 
 package monitor.entity {
-  class "type RefreshRate = 60 | 120 | 144 | 240" as RefreshRate
+  class "type RefreshRate = Hz60 | Hz120 | Hz144 | Hz240" as RefreshRate
   hide RefreshRate circle
 
   class Monitor <<entity>> <<@Entity>> {

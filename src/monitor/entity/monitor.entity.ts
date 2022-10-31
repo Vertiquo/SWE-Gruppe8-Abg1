@@ -51,9 +51,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { DecimalTransformer } from './decimal-transformer.js';
 import { Schlagwort } from './schlagwort.entity.js';
 
-const constRefreshRate = ['60', '120', '144', '240'];
+const constRefreshRate = ['Hz60', 'Hz120', 'Hz144', 'Hz240'];
 export type RefreshRate = typeof constRefreshRate[number];
-// export type RefreshRate = '60' | '120' | '144' | '240';
 
 @Entity()
 export class Monitor {
@@ -85,7 +84,7 @@ export class Monitor {
     readonly curved: boolean | undefined;
 
     @Column('varchar')
-    @ApiProperty({ example: 60, type: String })
+    @ApiProperty({ example: 'Hz60', type: String })
     readonly refreshRate!: RefreshRate;
 
     @Column('date')

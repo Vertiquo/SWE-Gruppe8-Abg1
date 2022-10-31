@@ -56,7 +56,7 @@ export const jsonSchema: GenericJsonSchema = {
         },
         refreshRate: {
             type: 'string',
-            enum: ['60', '120', '144', '240'], //Can this be referenced from the type?
+            enum: ['Hz60', 'Hz120', 'Hz144', 'Hz240'],
         },
         release: { type: 'string', format: 'date' },
         schlagwoerter: {
@@ -78,7 +78,7 @@ export const jsonSchema: GenericJsonSchema = {
             bestand: 'Der Bestand darf nicht negativ sein.',
             curved: "Das Attribut 'curved' muss ein boolean Wert (true/false) sein.",
             refreshRate:
-                'Die Bildwiederholungsfrequenz muss einer der folgenden Werte sein: (60 | 120 |144 | 240).',
+                'Die Bildwiederholungsfrequenz muss einer der folgenden Werte sein: (Hz60 | Hz120 | Hz144 | Hz240).',
             release: 'Das Releasedatum muss im Format yyyy-MM-dd sein.',
         },
     },

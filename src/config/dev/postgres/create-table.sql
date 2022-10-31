@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS monitor (
     name          varchar(40) NOT NULL UNIQUE USING INDEX TABLESPACE monitorspace,
                   -- https://www.postgresql.org/docs/current/ddl-constraints.html#id-1.5.4.6.6
                   -- https://www.postgresql.org/docs/current/ddl-constraints.html#DDL-CONSTRAINTS-CHECK-CONSTRAINTS
-    hersteller    varchar(40) NOT NULL USING INDEX TABLESPACE monitorspace,
+    hersteller    varchar(40) NOT NULL,
                   -- https://www.postgresql.org/docs/current/datatype-numeric.html#DATATYPE-NUMERIC-DECIMAL
                   -- 10 Stellen, davon 2 Nachkommastellen
     preis         decimal(8,2) NOT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS monitor (
                   -- https://www.postgresql.org/docs/current/datatype-boolean.html
     curved        boolean NOT NULL DEFAULT FALSE,
                   -- https://www.postgresql.org/docs/current/functions-matching.html#FUNCTIONS-POSIX-REGEXP
-    refreshRate   varchar(3) NOT NULL CHECK (refreshRate ~ '60|120|144|240')
+    refreshRate   varchar(3) NOT NULL CHECK (refreshRate ~ 'Hz60|Hz120|Hz144|Hz240'),
                   -- https://www.postgresql.org/docs/current/datatype-datetime.html
     release       date,
                   -- https://www.postgresql.org/docs/current/datatype-datetime.html
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS monitor (
 ) TABLESPACE monitorspace;
 
 CREATE TABLE IF NOT EXISTS schlagwort (
-    id         char(36) PRIMARY KEY USING INDEX TABLESPACE monitorspace,
+    id            char(36) PRIMARY KEY USING INDEX TABLESPACE monitorspace,
     monitor_id    char(36) NOT NULL REFERENCES monitor,
     schlagwort varchar(16) NOT NULL CHECK (schlagwort ~ 'highres|slim')
 ) TABLESPACE monitorspace;

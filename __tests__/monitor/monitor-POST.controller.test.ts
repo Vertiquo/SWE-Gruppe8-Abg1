@@ -39,7 +39,7 @@ const neuerMonitor: MonitorDTO = {
     preis: 99.99,
     bestand: 5,
     curved: true,
-    refreshRate: '144',
+    refreshRate: 'Hz144',
     release: '2022-01-31',
     schlagwoerter: ['highres', 'slim'],
 };
@@ -49,7 +49,7 @@ const neuerMonitorInvalid: Record<string, unknown> = {
     preis: -100.99,
     bestand: 1.2,
     curved: true,
-    refreshRate: '144',
+    refreshRate: '123',
     release: '123456123456',
     schlagwoerter: [],
 };
@@ -59,7 +59,7 @@ const neuerMonitorNameExistiert: MonitorDTO = {
     preis: 79.99,
     bestand: 7,
     curved: false,
-    refreshRate: '120',
+    refreshRate: 'Hz120',
     release: '2022-01-31',
     schlagwoerter: ['highres', 'slim'],
 };
@@ -148,7 +148,7 @@ describe('POST /', () => {
                 'Der Herstellername muss mit einem Buchstaben, einer Ziffer oder _ beginnen.',
                 'Der Preis darf nicht negativ sein.',
                 'Der Bestand darf nicht negativ sein.',
-                'Die Bildwiederholungsfrequenz muss einer der folgenden Werte sein: (60 | 120 |144 | 240).',
+                'Die Bildwiederholungsfrequenz muss einer der folgenden Werte sein: (Hz60 | Hz120 | Hz144 | Hz240).',
                 'Das Releasedatum muss im Format yyyy-MM-dd sein.',
             ]),
         );

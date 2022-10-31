@@ -78,8 +78,8 @@ input MonitorUpdateInput {
 
 "Enum-Typ für die Bildwiederholungsfrequenz."
 enum RefreshRate {
-  60
-  120
-  144
-  240
+  Hz60
+  Hz120
+  Hz144
+  Hz240
 }
