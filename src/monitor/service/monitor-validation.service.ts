@@ -27,7 +27,6 @@
 // https://ajv.js.org/guide/schema-language.html#draft-2019-09-and-draft-2012-12
 // https://github.com/ajv-validator/ajv/blob/master/docs/validation.md
 import Ajv2020 from 'ajv/dist/2020.js';
-import { type FormatValidator } from 'ajv/dist/types/index.js';
 import { Injectable } from '@nestjs/common';
 import { type Monitor } from '../entity/monitor.entity.js';
 import RE2 from 're2';
@@ -56,37 +55,6 @@ export class MonitorValidationService {
 
     validateId(id: string) {
         return ID_PATTERN.test(id);
-    }
-
-    #checkChars(chars: string[]) {
-        /* eslint-disable @typescript-eslint/no-magic-numbers, unicorn/no-for-loop, security/detect-object-injection */
-        let sum = 0;
-        let check: number | string;
-
-        if (chars.length === 9) {
-            // Compute the ISBN-10 check digit
-            chars.reverse();
-            for (let i = 0; i < chars.length; i++) {
-                sum += (i + 2) * Number.parseInt(chars[i] ?? '', 10);
-            }
-            check = 11 - (sum % 11); // eslint-disable-line @typescript-eslint/no-extra-parens
-            if (check === 10) {
-                check = 'X';
-            } else if (check === 11) {
-                check = '0';
-            }
-        } else {
-            // Compute the ISBN-13 check digit
-            for (let i = 0; i < chars.length; i++) {
-                sum += ((i % 2) * 2 + 1) * Number.parseInt(chars[i] ?? '', 10); // eslint-disable-line @typescript-eslint/no-extra-parens
-            }
-            check = 10 - (sum % 10); // eslint-disable-line @typescript-eslint/no-extra-parens
-            if (check === 10) {
-                check = '0';
-            }
-        }
-        return check;
-        /* eslint-enable @typescript-eslint/no-magic-numbers, unicorn/no-for-loop, security/detect-object-injection */
     }
 
     /**
