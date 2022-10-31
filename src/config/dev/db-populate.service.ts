@@ -26,9 +26,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Monitor } from '../../monitor/entity/monitor.entity.js';
 import { Repository } from 'typeorm';
 import { Schlagwort } from '../../monitor/entity/schlagwort.entity.js';
-import { monitore } from './testdaten.js';
 import { configDir } from '../node.js';
 import { getLogger } from '../../logger/logger.js';
+import { monitore } from './testdaten.js';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
