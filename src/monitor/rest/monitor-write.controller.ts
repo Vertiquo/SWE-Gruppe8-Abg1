@@ -277,14 +277,17 @@ export class MonitorWriteController {
 
     #handleCreateError(err: CreateError, res: Response) {
         switch (err.type) {
-            case 'ConstraintViolations':
+            case 'ConstraintViolations': {
                 return this.#handleValidationError(err.messages, res);
+            }
 
-            case 'NameExists':
+            case 'NameExists': {
                 return this.#handleNameExists(err.name, res);
+            }
 
-            default:
+            default: {
                 return res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
     }
 
@@ -329,8 +332,9 @@ export class MonitorWriteController {
 
     #handleUpdateError(err: UpdateError, res: Response): Response {
         switch (err.type) {
-            case 'ConstraintViolations':
+            case 'ConstraintViolations': {
                 return this.#handleValidationError(err.messages, res);
+            }
 
             case 'MonitorNotExists': {
                 const { id } = err;
@@ -342,8 +346,9 @@ export class MonitorWriteController {
                     .send(msg);
             }
 
-            case 'NameExists':
+            case 'NameExists': {
                 return this.#handleNameExists(err.name, res);
+            }
 
             case 'VersionInvalid': {
                 const { version } = err;
@@ -365,8 +370,9 @@ export class MonitorWriteController {
                     .send(msg);
             }
 
-            default:
+            default: {
                 return res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
     }
 }
