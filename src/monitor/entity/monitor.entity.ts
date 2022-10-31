@@ -76,15 +76,15 @@ export class Monitor {
     @ApiProperty({ example: '1999.99', type: Number })
     readonly preis!: number;
 
-    @Column('number')
-    @ApiProperty({ example: '40', type: String })
+    @Column('bigint')
+    @ApiProperty({ example: '40', type: Number })
     readonly bestand!: number;
 
     @Column('boolean')
     @ApiProperty({ example: true, type: Boolean })
     readonly curved: boolean | undefined;
 
-    @Column('string')
+    @Column('varchar')
     @ApiProperty({ example: 60, type: String })
     readonly refreshRate!: RefreshRate;
 
