@@ -26,8 +26,8 @@ import {
     shutdownServer,
     startServer,
 } from '../testserver.js';
-import { type BuchDTO } from '../../src/buch/graphql/buch-query.resolver.js';
 import { HttpStatus } from '@nestjs/common';
+import { type MonitorDTO } from '../../src/monitor/graphql/monitor-query.resolver.js';
 import each from 'jest-each';
 
 // -----------------------------------------------------------------------------
@@ -39,11 +39,11 @@ const idVorhanden = [
     '00000000-0000-0000-0000-000000000003',
 ];
 
-const titelVorhanden = ['Alpha', 'Beta', 'Gamma'];
+const nameVorhanden = ['Alpha', 'Beta', 'Gamma'];
 
-const teilTitelVorhanden = ['a', 't', 'g'];
+const teilNameVorhanden = ['a', 't', 'g'];
 
-const teilTitelNichtVorhanden = ['Xyz', 'abc'];
+const teilNameNichtVorhanden = ['Xyz', 'abc'];
 
 // -----------------------------------------------------------------------------
 // T e s t s
@@ -68,51 +68,54 @@ describe('GraphQL Queries', () => {
         await shutdownServer();
     });
 
-    each(idVorhanden).test('Buch zu vorhandener ID %s', async (id: string) => {
-        // given
-        const body: GraphQLRequest = {
-            query: `
-                {
-                    buch(id: "${id}") {
-                        titel
-                        art
-                        isbn
-                        version
+    each(idVorhanden).test(
+        'Monitor zu vorhandener ID %s',
+        async (id: string) => {
+            // given
+            const body: GraphQLRequest = {
+                query: `
+                    {
+                        monitor(id: "${id}") {
+                            name
+                            hersteller
+                            preis
+                            version
                     }
                 }
             `,
-        };
+            };
 
-        // when
-        const response: AxiosResponse<GraphQLResponse> = await client.post(
-            graphqlPath,
-            body,
-        );
+            // when
+            const response: AxiosResponse<GraphQLResponse> = await client.post(
+                graphqlPath,
+                body,
+            );
 
-        // then
-        const { status, headers, data } = response;
+            // then
+            const { status, headers, data } = response;
 
-        expect(status).toBe(HttpStatus.OK);
-        expect(headers['content-type']).toMatch(/json/iu);
-        expect(data.errors).toBeUndefined();
-        expect(data.data).toBeDefined();
+            expect(status).toBe(HttpStatus.OK);
+            expect(headers['content-type']).toMatch(/json/iu);
+            expect(data.errors).toBeUndefined();
+            expect(data.data).toBeDefined();
 
-        const { buch } = data.data!;
-        const result: BuchDTO = buch;
+            const { monitor } = data.data!;
+            const result: MonitorDTO = monitor;
 
-        expect(result.titel).toMatch(/^\w/u);
-        expect(result.version).toBeGreaterThan(-1);
-        expect(result.id).toBeUndefined();
-    });
+            expect(result.name).toMatch(/^\w/u);
+            expect(result.version).toBeGreaterThan(-1);
+            expect(result.id).toBeUndefined();
+        },
+    );
 
-    test('Buch zu nicht-vorhandener ID', async () => {
+    test('Monitor zu nicht-vorhandener ID', async () => {
         // given
         const id = '999999999999999999999999';
         const body: GraphQLRequest = {
             query: `
                 {
-                    buch(id: "${id}") {
-                        titel
+                    monitor(id: "${id}") {
+                        name
                     }
                 }
             `,
@@ -129,7 +132,7 @@ describe('GraphQL Queries', () => {
 
         expect(status).toBe(HttpStatus.OK);
         expect(headers['content-type']).toMatch(/json/iu);
-        expect(data.data!.buch).toBeNull();
+        expect(data.data!.monitor).toBeNull();
 
         const { errors } = data;
 
@@ -138,23 +141,25 @@ describe('GraphQL Queries', () => {
         const [error] = errors!;
         const { message, path, extensions } = error!;
 
-        expect(message).toBe(`Es wurde kein Buch mit der ID ${id} gefunden.`);
+        expect(message).toBe(
+            `Es wurde kein Monitor mit der ID ${id} gefunden.`,
+        );
         expect(path).toBeDefined();
-        expect(path!![0]).toBe('buch');
+        expect(path!![0]).toBe('monitor');
         expect(extensions).toBeDefined();
         expect(extensions!.code).toBe('BAD_USER_INPUT');
     });
 
-    each(titelVorhanden).test(
-        'Buch zu vorhandenem Titel %s',
-        async (titel: string) => {
+    each(nameVorhanden).test(
+        'Monitor zu vorhandenem Namen %s',
+        async (name: string) => {
             // given
             const body: GraphQLRequest = {
                 query: `
                     {
-                        buecher(titel: "${titel}") {
-                            titel
-                            art
+                        monitore(name: "${name}") {
+                            name
+                            hersteller
                         }
                     }
                 `,
@@ -175,30 +180,30 @@ describe('GraphQL Queries', () => {
 
             expect(data.data).toBeDefined();
 
-            const { buecher } = data.data!;
+            const { monitore } = data.data!;
 
-            expect(buecher).not.toHaveLength(0);
+            expect(monitore).not.toHaveLength(0);
 
-            const buecherArray: BuchDTO[] = buecher;
+            const monitoreArray: MonitorDTO[] = monitore;
 
-            expect(buecherArray).toHaveLength(1);
+            expect(monitoreArray).toHaveLength(1);
 
-            const [buch] = buecherArray;
+            const [monitor] = monitoreArray;
 
-            expect(buch!.titel).toBe(titel);
+            expect(monitor!.name).toBe(name);
         },
     );
 
-    each(teilTitelVorhanden).test(
-        'Buch zu vorhandenem Teil-Titel %s',
-        async (teilTitel: string) => {
+    each(teilNameVorhanden).test(
+        'Monitor zu vorhandenem Teil-Namen %s',
+        async (teilName: string) => {
             // given
             const body: GraphQLRequest = {
                 query: `
                     {
-                        buecher(titel: "${teilTitel}") {
-                            titel
-                            art
+                        monitore(name: "${teilName}") {
+                            name
+                            hersteller
                         }
                     }
                 `,
@@ -218,31 +223,31 @@ describe('GraphQL Queries', () => {
             expect(data.errors).toBeUndefined();
             expect(data.data).toBeDefined();
 
-            const { buecher } = data.data!;
+            const { monitore } = data.data!;
 
-            expect(buecher).not.toHaveLength(0);
+            expect(monitore).not.toHaveLength(0);
 
-            const buecherArray: BuchDTO[] = buecher;
-            buecherArray
-                .map((buch) => buch.titel)
-                .forEach((titel: string) =>
-                    expect(titel.toLowerCase()).toEqual(
-                        expect.stringContaining(teilTitel),
+            const monitoreArray: MonitorDTO[] = monitore;
+            monitoreArray
+                .map((monitor) => monitor.name)
+                .forEach((name: string) =>
+                    expect(name.toLowerCase()).toEqual(
+                        expect.stringContaining(teilName),
                     ),
                 );
         },
     );
 
-    each(teilTitelNichtVorhanden).test(
-        'Buch zu nicht vorhandenem Titel %s',
-        async (teilTitel: string) => {
+    each(teilNameNichtVorhanden).test(
+        'Monitor zu nicht vorhandenem Namen %s',
+        async (teilName: string) => {
             // given
             const body: GraphQLRequest = {
                 query: `
                     {
-                        buecher(titel: "${teilTitel}") {
-                            titel
-                            art
+                        monitore(name: "${teilName}") {
+                            name
+                            hersteller
                         }
                     }
                 `,
@@ -259,7 +264,7 @@ describe('GraphQL Queries', () => {
 
             expect(status).toBe(HttpStatus.OK);
             expect(headers['content-type']).toMatch(/json/iu);
-            expect(data.data!.buecher).toBeNull();
+            expect(data.data!.monitore).toBeNull();
 
             const { errors } = data;
 
@@ -268,9 +273,9 @@ describe('GraphQL Queries', () => {
             const [error] = errors!;
             const { message, path, extensions } = error!;
 
-            expect(message).toBe('Es wurden keine Buecher gefunden.');
+            expect(message).toBe('Es wurden keine Monitore gefunden.');
             expect(path).toBeDefined();
-            expect(path!![0]).toBe('buecher');
+            expect(path!![0]).toBe('monitore');
             expect(extensions).toBeDefined();
             expect(extensions!.code).toBe('BAD_USER_INPUT');
         },
