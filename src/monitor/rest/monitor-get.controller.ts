@@ -53,7 +53,6 @@ import { Request, Response } from 'express';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
 import { getBaseUri } from './getBaseUri.js';
 import { getLogger } from '../../logger/logger.js';
-import { httpsAgent } from '../../../__tests__/testserver.js';
 
 interface Link {
     href: string;
