@@ -24,67 +24,55 @@ import {
     shutdownServer,
     startServer,
 } from '../testserver.js';
-import { type BuchUpdateDTO } from '../../src/buch/rest/buch-write.controller.js';
 import { HttpStatus } from '@nestjs/common';
-import { MAX_RATING } from '../../src/buch/service/jsonSchema.js';
+import { type MonitorUpdateDTO } from '../../src/monitor/rest/monitor-write.controller.js';
 import { loginRest } from '../login.js';
 
 // -----------------------------------------------------------------------------
 // T e s t d a t e n
 // -----------------------------------------------------------------------------
-const geaendertesBuch: BuchUpdateDTO = {
+const geaenderterMonitor: MonitorUpdateDTO = {
     // isbn wird nicht geaendet
-    titel: 'Geaendert',
-    rating: 1,
-    art: 'DRUCKAUSGABE',
-    verlag: 'BAR_VERLAG',
+    name: 'Geaendert',
+    hersteller: 'PHILIPS',
     preis: 44.4,
-    rabatt: 0.044,
-    lieferbar: true,
-    datum: '2022-02-03',
-    isbn: '0007097328',
-    homepage: 'https://test.te',
+    bestand: 10,
+    curved: true,
+    refreshRate: '60',
+    release: '2022-02-03',
 };
 const idVorhanden = '00000000-0000-0000-0000-000000000040';
 
-const geaendertesBuchIdNichtVorhanden: BuchUpdateDTO = {
-    titel: 'Nichtvorhanden',
-    rating: 1,
-    art: 'DRUCKAUSGABE',
-    verlag: 'BAR_VERLAG',
+const geaenderterMonitorIdNichtVorhanden: MonitorUpdateDTO = {
+    name: 'Nichtvorhanden',
+    hersteller: 'PHILIPS',
     preis: 44.4,
-    rabatt: 0.044,
-    lieferbar: true,
-    datum: '2022-02-04',
-    isbn: '0007097328',
-    homepage: 'https://test.te',
+    bestand: 10,
+    curved: true,
+    refreshRate: '60',
+    release: '2022-02-03',
 };
 const idNichtVorhanden = '99999999-9999-9999-9999-999999999999';
 
-const geaendertesBuchInvalid: Record<string, unknown> = {
-    titel: '?!$',
-    rating: -1,
-    art: 'UNSICHTBAR',
-    verlag: 'NO_VERLAG',
-    preis: 0.01,
-    rabatt: 2,
-    lieferbar: true,
-    datum: '12345-123-123',
-    isbn: 'falsche-ISBN',
+const geaenderterMonitorInvalid: Record<string, unknown> = {
+    name: '?!$',
+    hersteller: 'UNSICHTBAR',
+    preis: -0.01,
+    bestand: -1,
+    curved: true,
+    refreshRate: '-1',
+    release: 'f12345-123-123',
 };
 
 // isbn wird nicht geaendet
-const veraltesBuch: BuchUpdateDTO = {
-    titel: 'Veraltet',
-    rating: 1,
-    art: 'DRUCKAUSGABE',
-    verlag: 'BAR_VERLAG',
-    preis: 44.4,
-    rabatt: 0.044,
-    lieferbar: true,
-    datum: '2022-02-03',
-    isbn: '0007097328',
-    homepage: 'https://test.te',
+const veralteterMonitor: MonitorUpdateDTO = {
+    name: 'Veraltet',
+    hersteller: 'PHILIPS',
+    preis: 39.4,
+    bestand: 10,
+    curved: true,
+    refreshRate: '60',
+    release: '2022-02-03',
 };
 
 // -----------------------------------------------------------------------------
@@ -115,7 +103,7 @@ describe('PUT /:id', () => {
         await shutdownServer();
     });
 
-    test('Vorhandenes Buch aendern', async () => {
+    test('Vorhandenen Monitor aendern', async () => {
         // given
         const url = `/${idVorhanden}`;
         const token = await loginRest(client);
@@ -125,7 +113,7 @@ describe('PUT /:id', () => {
         // when
         const response: AxiosResponse<string> = await client.put(
             url,
-            geaendertesBuch,
+            geaenderterMonitor,
             { headers },
         );
 
@@ -136,7 +124,7 @@ describe('PUT /:id', () => {
         expect(data).toBe('');
     });
 
-    test('Nicht-vorhandenes Buch aendern', async () => {
+    test('Nicht-vorhandenen Monitor aendern', async () => {
         // given
         const url = `/${idNichtVorhanden}`;
         const token = await loginRest(client);
@@ -146,7 +134,7 @@ describe('PUT /:id', () => {
         // when
         const response: AxiosResponse<string> = await client.put(
             url,
-            geaendertesBuchIdNichtVorhanden,
+            geaenderterMonitorIdNichtVorhanden,
             { headers },
         );
 
@@ -155,11 +143,11 @@ describe('PUT /:id', () => {
 
         expect(status).toBe(HttpStatus.PRECONDITION_FAILED);
         expect(data).toBe(
-            `Es gibt kein Buch mit der ID "${idNichtVorhanden}".`,
+            `Es gibt keinen Monitor mit der ID "${idNichtVorhanden}".`,
         );
     });
 
-    test('Vorhandenes Buch aendern, aber mit ungueltigen Daten', async () => {
+    test('Vorhandenen Monitor aendern, aber mit ungueltigen Daten', async () => {
         // given
         const url = `/${idVorhanden}`;
         const token = await loginRest(client);
@@ -169,7 +157,7 @@ describe('PUT /:id', () => {
         // when
         const response: AxiosResponse<string> = await client.put(
             url,
-            geaendertesBuchInvalid,
+            geaenderterMonitorInvalid,
             { headers },
         );
 
@@ -179,18 +167,18 @@ describe('PUT /:id', () => {
         expect(status).toBe(HttpStatus.UNPROCESSABLE_ENTITY);
         expect(data).toEqual(
             expect.arrayContaining([
-                'Ein Buchtitel muss mit einem Buchstaben, einer Ziffer oder _ beginnen.',
-                `Eine Bewertung muss zwischen 0 und ${MAX_RATING} liegen.`,
-                'Die Art eines Buches muss KINDLE oder DRUCKAUSGABE sein.',
-                'Der Verlag eines Buches muss FOO_VERLAG oder BAR_VERLAG sein.',
-                'Der Rabatt muss ein Wert zwischen 0 und 1 sein.',
+                'Ein Monitorname muss mit einem Buchstaben, einer Ziffer oder _ beginnen.',
+                'Der Hersteller muss einer vorher festgelegten Auswahl entsprechen.',
+                'Der Preis eines Monitors kann nicht negativ sein.',
+                'Der Bestand kann nicht negativ sein.',
+                'Der Monitor kann entweder gebogen sein, oder nicht.',
+                'Die Aktualisierungsrate ist nicht korrekt.',
                 'Das Datum muss im Format yyyy-MM-dd sein.',
-                'Die ISBN-Nummer ist nicht korrekt.',
             ]),
         );
     });
 
-    test('Vorhandenes Buch aendern, aber ohne Versionsnummer', async () => {
+    test('Vorhandenen Monitor aendern, aber ohne Versionsnummer', async () => {
         // given
         const url = `/${idVorhanden}`;
         const token = await loginRest(client);
@@ -200,7 +188,7 @@ describe('PUT /:id', () => {
         // when
         const response: AxiosResponse<string> = await client.put(
             url,
-            geaendertesBuch,
+            geaenderterMonitor,
             { headers },
         );
 
@@ -211,7 +199,7 @@ describe('PUT /:id', () => {
         expect(data).toBe('Header "If-Match" fehlt');
     });
 
-    test('Vorhandenes Buch aendern, aber mit alter Versionsnummer', async () => {
+    test('Vorhandenen Monitor aendern, aber mit alter Versionsnummer', async () => {
         // given
         const url = `/${idVorhanden}`;
         const token = await loginRest(client);
@@ -221,7 +209,7 @@ describe('PUT /:id', () => {
         // when
         const response: AxiosResponse<string> = await client.put(
             url,
-            veraltesBuch,
+            veralteterMonitor,
             { headers },
         );
 
@@ -241,7 +229,7 @@ describe('PUT /:id', () => {
         // when
         const response: AxiosResponse<Record<string, any>> = await client.put(
             url,
-            geaendertesBuch,
+            geaenderterMonitor,
             { headers },
         );
 
@@ -252,7 +240,7 @@ describe('PUT /:id', () => {
         expect(data.statusCode).toBe(HttpStatus.FORBIDDEN);
     });
 
-    test('Vorhandenes Buch aendern, aber mit falschem Token', async () => {
+    test('Vorhandenen Monitor aendern, aber mit falschem Token', async () => {
         // given
         const url = `/${idVorhanden}`;
         const token = 'FALSCH';
@@ -261,7 +249,7 @@ describe('PUT /:id', () => {
         // when
         const response: AxiosResponse<Record<string, any>> = await client.put(
             url,
-            geaendertesBuch,
+            geaenderterMonitor,
             { headers },
         );
 
