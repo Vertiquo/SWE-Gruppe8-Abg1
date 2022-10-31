@@ -51,9 +51,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { DecimalTransformer } from './decimal-transformer.js';
 import { Schlagwort } from './schlagwort.entity.js';
 
-export const constRefreshRate = ['60', '120', '144', '240'];
-// Referenziert eine Konstante, damit einfacher auf die Werte zugegriffen werden kann,
-// ohne diese mehrmals zu schreiben.
+const constRefreshRate = ['60', '120', '144', '240'];
 export type RefreshRate = typeof constRefreshRate[number];
 // export type RefreshRate = '60' | '120' | '144' | '240';
 

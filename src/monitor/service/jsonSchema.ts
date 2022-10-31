@@ -15,7 +15,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import { type GenericJsonSchema } from './GenericJsonSchema.js';
-import { constRefreshRate } from './../entity/monitor.entity';
 
 export const MAX_RATING = 5;
 
@@ -57,8 +56,7 @@ export const jsonSchema: GenericJsonSchema = {
         },
         refreshRate: {
             type: 'string',
-            enum: constRefreshRate,
-            // enum: ['60', '120', '144', '240'], //Can this be referenced from the type?
+            enum: ['60', '120', '144', '240'], //Can this be referenced from the type?
         },
         release: { type: 'string', format: 'date' },
         schlagwoerter: {
