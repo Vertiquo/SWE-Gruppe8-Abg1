@@ -48,9 +48,9 @@ import {
 } from '@nestjs/common';
 import { type CreateError, type UpdateError } from '../service/errors.js';
 import { Request, Response } from 'express';
+import { JwtAuthGuard } from '../../security/auth/jwt/jwt-auth.guard.js';
 import { type Monitor } from '../entity/monitor.entity.js';
 import { MonitorWriteService } from '../service/monitor-write.service.js';
-import { JwtAuthGuard } from '../../security/auth/jwt/jwt-auth.guard.js';
 import { ResponseTimeInterceptor } from '../../logger/response-time.interceptor.js';
 import { Roles } from '../../security/auth/roles/roles.decorator.js';
 import { RolesGuard } from '../../security/auth/roles/roles.guard.js';
@@ -95,8 +95,7 @@ export class MonitorWriteController {
      * dass damit der neu angelegte Monitor abgerufen werden kann.
      *
      * Falls Constraints verletzt sind, wird der Statuscode `400` (`Bad Request`)
-     * gesetzt und genauso auch wenn der Titel oder die ISBN-Nummer bereits
-     * existieren.
+     * gesetzt und genauso auch wenn der Name existiert.
      *
      * @param monitor JSON-Daten für einen Monitor im Request-Body.
      * @param res Leeres Response-Objekt von Express.
@@ -114,7 +113,9 @@ export class MonitorWriteController {
     ): Promise<Response> {
         this.#logger.debug('create: monitorDTO=%o', monitorDTO);
 
-        const result = await this.#service.create(this.#dtoToMonitor(monitorDTO));
+        const result = await this.#service.create(
+            this.#dtoToMonitor(monitorDTO),
+        );
         if (Object.prototype.hasOwnProperty.call(result, 'type')) {
             return this.#handleCreateError(result as CreateError, res);
         }
@@ -141,7 +142,7 @@ export class MonitorWriteController {
      * required`) gesetzt; und falls sie nicht korrekt ist, der Statuscode `412`
      * (`Precondition failed`). Falls Constraints verletzt sind, wird der
      * Statuscode `400` (`Bad Request`) gesetzt und genauso auch wenn der neue
-     * Titel oder die neue ISBN-Nummer bereits existieren.
+     * Name bereits existiert.
      *
      * @param monitor Monitordaten im Body des Request-Objekts.
      * @param id Pfad-Paramater für die ID.
@@ -280,10 +281,7 @@ export class MonitorWriteController {
                 return this.#handleValidationError(err.messages, res);
 
             case 'NameExists':
-                return this.#handleTitelExists(err.name, res);
-
-            case 'IdExists':
-                return this.#handleIsbnExists(err.id, res);
+                return this.#handleNameExists(err.name, res);
 
             default:
                 return res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -298,24 +296,12 @@ export class MonitorWriteController {
         return res.status(HttpStatus.UNPROCESSABLE_ENTITY).send(messages);
     }
 
-    #handleTitelExists(
-        titel: string | null | undefined,
+    #handleNameExists(
+        name: string | null | undefined,
         res: Response,
     ): Response {
-        const msg = `Der Titel "${titel}" existiert bereits.`;
-        this.#logger.debug('#handleTitelExists(): msg=%s', msg);
-        return res
-            .status(HttpStatus.UNPROCESSABLE_ENTITY)
-            .set('Content-Type', 'text/plain')
-            .send(msg);
-    }
-
-    #handleIsbnExists(
-        isbn: string | null | undefined,
-        res: Response,
-    ): Response {
-        const msg = `Die ISBN-Nummer "${isbn}" existiert bereits.`;
-        this.#logger.debug('#handleIsbnExists(): msg=%s', msg);
+        const msg = `Der Name "${name}" existiert bereits.`;
+        this.#logger.debug('#handleNameExists(): msg=%s', msg);
         return res
             .status(HttpStatus.UNPROCESSABLE_ENTITY)
             .set('Content-Type', 'text/plain')
@@ -357,7 +343,7 @@ export class MonitorWriteController {
             }
 
             case 'NameExists':
-                return this.#handleTitelExists(err.name, res);
+                return this.#handleNameExists(err.name, res);
 
             case 'VersionInvalid': {
                 const { version } = err;
