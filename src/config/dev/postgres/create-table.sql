@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS monitor (
                   -- https://www.postgresql.org/docs/current/datatype-boolean.html
     curved        boolean NOT NULL DEFAULT FALSE,
                   -- https://www.postgresql.org/docs/current/functions-matching.html#FUNCTIONS-POSIX-REGEXP
-    refreshRate   varchar(3) NOT NULL CHECK (refreshRate ~ 'Hz60|Hz120|Hz144|Hz240'),
+    refreshrate   varchar(5) NOT NULL CHECK (refreshrate ~ 'Hz60|Hz120|Hz144|Hz240'),
                   -- https://www.postgresql.org/docs/current/datatype-datetime.html
     release       date,
                   -- https://www.postgresql.org/docs/current/datatype-datetime.html

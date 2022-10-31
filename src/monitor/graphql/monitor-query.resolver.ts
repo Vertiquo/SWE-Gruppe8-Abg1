@@ -96,7 +96,7 @@ export class MonitorQueryResolver {
             bestand: monitor.bestand,
             curved: monitor.curved,
             release: monitor.release,
-            refreshRate: monitor.refreshRate,
+            refreshrate: monitor.refreshrate,
             schlagwoerter,
         };
         return monitorDTO;

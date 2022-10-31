@@ -110,7 +110,7 @@ export class MonitorQuery implements Suchkriterien {
     declare readonly curved: boolean;
 
     @ApiProperty({ required: false })
-    declare readonly refreshRate: RefreshRate;
+    declare readonly refreshrate: RefreshRate;
 
     @ApiProperty({ required: false })
     declare readonly highres: boolean;
@@ -300,7 +300,7 @@ export class MonitorGetController {
             preis: monitor.preis,
             bestand: monitor.bestand,
             curved: monitor.curved,
-            refreshRate: monitor.refreshRate,
+            refreshrate: monitor.refreshrate,
             release: monitor.release,
             schlagwoerter,
             _links: links,

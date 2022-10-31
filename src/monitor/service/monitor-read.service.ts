@@ -33,7 +33,7 @@ export interface Suchkriterien {
     readonly preis?: number;
     readonly bestand?: number;
     readonly curved?: boolean;
-    readonly refreshRate?: RefreshRate;
+    readonly refreshrate?: RefreshRate;
     readonly highres?: boolean;
     readonly slim?: boolean;
 }

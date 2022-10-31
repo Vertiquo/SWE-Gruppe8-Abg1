@@ -28,12 +28,12 @@ X-REQUEST-TYPE: GraphQL
   monitore {
     id
     name
-    refreshRate
+    refreshrate
     version
   }
 }
 
-### Suche name, refreshRate, hersteller und version von einem Monitor mit vorhandener Monitor-ID
+### Suche name, refreshrate, hersteller und version von einem Monitor mit vorhandener Monitor-ID
 POST {{graphQlUrl}}
 Content-Type: application/json
 X-REQUEST-TYPE: GraphQL
@@ -41,7 +41,7 @@ X-REQUEST-TYPE: GraphQL
 query ($id: ID! = "00000000-0000-0000-0000-000000000001") {
   monitor(id: $id) {
     name
-    refreshRate
+    refreshrate
     hersteller
     version
   }
@@ -66,14 +66,14 @@ query ($id: ID! = "99999999-9999-9999-9999-999999999999") {
   "id": "99999999-9999-9999-9999-999999999999"
 }
 
-### Suche refreshRate von Monitoren mit vorhandenem Titel
+### Suche refreshrate von Monitoren mit vorhandenem Titel
 POST {{graphQlUrl}}
 Content-Type: application/json
 X-REQUEST-TYPE: GraphQL
 
 query ($name: String = "Alpha") {
   monitore(name: $name) {
-    refreshRate
+    refreshrate
   }
 }
 
@@ -98,14 +98,14 @@ query ($name: String = "a") {
   "name": "a"
 }
 
-### Suche refreshRate von Monitoren mit NICHT-vorhandenem Titel
+### Suche refreshrate von Monitoren mit NICHT-vorhandenem Titel
 POST {{graphQlUrl}}
 Content-Type: application/json
 X-REQUEST-TYPE: GraphQL
 
 query ($name: String = "Nichtvorhanden") {
   monitore(name: $name) {
-    refreshRate
+    refreshrate
   }
 }
 

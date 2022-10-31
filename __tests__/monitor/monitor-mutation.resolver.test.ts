@@ -74,7 +74,7 @@ describe('GraphQL Mutations', () => {
                             preis: 44.4,
                             bestand: 10,
                             curved: true,
-                            refreshRate: '60',
+                            refreshrate: 'Hz60',
                             release: '2022-02-03',
                             schlagwoerter: ["PHILIPS"],
                         }
@@ -119,7 +119,7 @@ describe('GraphQL Mutations', () => {
                             preis: 44.4,
                             bestand: 10,
                             curved: true,
-                            refreshRate: '60',
+                            refreshrate: 'Hz60',
                             release: '2022-02-03',
                             schlagwoerter: ["PHILIPS"],
                         }
@@ -169,7 +169,7 @@ describe('GraphQL Mutations', () => {
                             preis: 44.4,
                             bestand: 10,
                             curved: true,
-                            refreshRate: '60',
+                            refreshrate: 'Hz60',
                             release: '2022-02-03',
                         }
                     )
@@ -214,7 +214,7 @@ describe('GraphQL Mutations', () => {
                             preis: -0.01,
                             bestand: -1,
                             curved: true,
-                            refreshRate: '-1',
+                            refreshrate: '-1',
                             release: 'f12345-123-123',
                         }
                     )
@@ -295,7 +295,7 @@ describe('GraphQL Mutations', () => {
                             preis: 44.4,
                             bestand: 10,
                             curved: true,
-                            refreshRate: '60',
+                            refreshrate: 'Hz60',
                             release: '2022-02-03',
                         }
                     )

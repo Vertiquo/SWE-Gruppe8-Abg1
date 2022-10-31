@@ -85,7 +85,7 @@ export class Monitor {
 
     @Column('varchar')
     @ApiProperty({ example: 'Hz60', type: String })
-    readonly refreshRate!: RefreshRate;
+    readonly refreshrate!: RefreshRate;
 
     @Column('date')
     @ApiProperty({ example: '2022-22-10' })

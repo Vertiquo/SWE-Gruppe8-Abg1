@@ -38,7 +38,7 @@ const geaenderterMonitor: MonitorUpdateDTO = {
     preis: 44.4,
     bestand: 10,
     curved: true,
-    refreshRate: '60',
+    refreshrate: 'Hz60',
     release: '2022-02-03',
 };
 const idVorhanden = '00000000-0000-0000-0000-000000000040';
@@ -49,7 +49,7 @@ const geaenderterMonitorIdNichtVorhanden: MonitorUpdateDTO = {
     preis: 44.4,
     bestand: 10,
     curved: true,
-    refreshRate: '60',
+    refreshrate: 'Hz60',
     release: '2022-02-03',
 };
 const idNichtVorhanden = '99999999-9999-9999-9999-999999999999';
@@ -60,7 +60,7 @@ const geaenderterMonitorInvalid: Record<string, unknown> = {
     preis: -0.01,
     bestand: -1,
     curved: true,
-    refreshRate: '-1',
+    refreshrate: '-1',
     release: 'f12345-123-123',
 };
 
@@ -71,7 +71,7 @@ const veralteterMonitor: MonitorUpdateDTO = {
     preis: 39.4,
     bestand: 10,
     curved: true,
-    refreshRate: '60',
+    refreshrate: 'Hz60',
     release: '2022-02-03',
 };
 

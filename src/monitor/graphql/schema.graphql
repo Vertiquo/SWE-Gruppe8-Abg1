@@ -45,7 +45,7 @@ type Monitor {
   preis: Float
   bestand: Int
   curved: Boolean
-  refreshRate: RefreshRate
+  refreshrate: RefreshRate
   release: String
   schlagwoerter: [String]
 }
@@ -57,7 +57,7 @@ input MonitorInput {
   preis: Float
   bestand: Int
   curved: Boolean
-  refreshRate: RefreshRate
+  refreshrate: RefreshRate
   release: String
   schlagwoerter: [String]
 }
@@ -71,7 +71,7 @@ input MonitorUpdateInput {
   preis: Float
   bestand: Int
   curved: Boolean
-  refreshRate: RefreshRate
+  refreshrate: RefreshRate
   release: String
   schlagwoerter: [String]
 }

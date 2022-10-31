@@ -39,7 +39,7 @@ const neuerMonitor: MonitorDTO = {
     preis: 99.99,
     bestand: 5,
     curved: true,
-    refreshRate: 'Hz144',
+    refreshrate: 'Hz144',
     release: '2022-01-31',
     schlagwoerter: ['highres', 'slim'],
 };
@@ -49,7 +49,7 @@ const neuerMonitorInvalid: Record<string, unknown> = {
     preis: -100.99,
     bestand: 1.2,
     curved: true,
-    refreshRate: '123',
+    refreshrate: '123',
     release: '123456123456',
     schlagwoerter: [],
 };
@@ -59,7 +59,7 @@ const neuerMonitorNameExistiert: MonitorDTO = {
     preis: 79.99,
     bestand: 7,
     curved: false,
-    refreshRate: 'Hz120',
+    refreshrate: 'Hz120',
     release: '2022-01-31',
     schlagwoerter: ['highres', 'slim'],
 };
