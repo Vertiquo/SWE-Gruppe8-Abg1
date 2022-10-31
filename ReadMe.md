@@ -177,11 +177,11 @@ starten und später auch herunterfahren.
 > Verzeichnis extras\postgres die Zeile mit dem (eingeschränkten) Linux-User
 > "postgres:postgres" auskommentieren, damit die Initialisierung von PostgreSQL
 > als Linux-User `root` ausgeführt werden kann. Danach kopiert man die Skripte
-> `create-db-buch.sh` und `create-db-buch.sql` aus dem Verzeichnis
+> `create-db-monitor.sh` und `create-db-monitor.sql` aus dem Verzeichnis
 > `extras\postgres\sql` nach `C:\Zimmermann\volumes\postgres\sql`.
 > Für die Windows-Verzeichnisse `C:\Zimmermann\volumes\postgres\data`,
 > `C:\Zimmermann\volumes\postgres\tablespace` und
-> `C:\Zimmermann\volumes\postgres\tablespace\buch` muss außerdem Vollzugriff
+> `C:\Zimmermann\volumes\postgres\tablespace\monitor` muss außerdem Vollzugriff
 > gewährt werden, was über das Kontextmenü mit _Eigenschaften_ und den
 > Karteireiter _Sicherheit_ für die Windows-Gruppe _Benutzer_ eingerichtet
 > werden kann. Nun kann man das Auskommentieren des eingeschränkten Linux-Users
@@ -203,8 +203,8 @@ _virtuelle Rechnername_ `postgres`. Der virtuelle Rechnername `postgres`
 wird später auch als Service-Name für PostgreSQL in Kubernetes verwendet.
 
 > ❗ Nach dem 1. Start des PostgreSQL-Servers muss man einmalig den
-> Datenbank-User `buch` und dessen Datenbank `buch` anlegen, d.h. der neue
-> Datenbank-User `buch` wird zum Owner der Datenbank `buch`. Dazu muss man
+> Datenbank-User `monitor` und dessen Datenbank `monitor` anlegen, d.h. der neue
+> Datenbank-User `monitor` wird zum Owner der Datenbank `monitor`. Dazu muss man
 > sich mit dem Docker-Container mit Namen `postgres` verbinden und im
 > Docker-Container das `bash`-Skript ausführen:
 
@@ -285,8 +285,8 @@ Wenn man den eigenen Microservice direkt mit Windows - nicht mit Kubernetes -
 laufen lässt, kann man MySQL und das Administrationswerkzeug phpMyAdmin einfach
 mit _Docker Compose_ starten und später auch herunterfahren.
 
-> ❗ Vor dem 1. Start von MySQL muss man die Skripte `create-db-buch.sh` und
-> `create-db-buch.sql` aus dem Projektverzeichnis
+> ❗ Vor dem 1. Start von MySQL muss man die Skripte `create-db-monitor.sh` und
+> `create-db-monitor.sql` aus dem Projektverzeichnis
 > `extras\mysql\sql` nach `C:\Zimmermann\volumes\mysql\sql` kopieren.
 
 ```powershell
@@ -303,8 +303,8 @@ Der virtuelle Rechnername wird später auch als Service-Name für MySQL in
 Kubernetes verwendet.
 
 > ❗ Nach dem 1. Start des DB-Servers muss man einmalig den Datenbank-User
-> `buch` und dessen Datenbank `buch` anlegen, d.h. der neue Datenbank-User
-> `buch` wird zum Owner der Datenbank `buch`. Dazu muss man sich mit dem
+> `monitor` und dessen Datenbank `monitor` anlegen, d.h. der neue Datenbank-User
+> `monitor` wird zum Owner der Datenbank `monitor`. Dazu muss man sich mit dem
 > Docker-Container mit Namen `mysql` verbinden und im Docker-Container das
 > `bash`-Skript ausführen:
 
@@ -413,21 +413,21 @@ Um effizient mit Apollo Sandbox zu arbeiten, empfiehlt es sich, dass man sich
 dort registriert, damit man z.B. Autovervollständigen nutzen kann. Für das
 Programmierbeispiel kann man beim Registrieren z.B. folgende Daten eingegeben:
 
-- _Graph title_: `Buch`
+- _Graph title_: `Monitor`
 - _Graph type_: `Development` angeklickt
 - _Endpoint_: https://localhost:3000/graphql
 
 Abschließend klickt man dann den Button _Create Graph_ an.
 
 Beispielhafte _Queries_ und _Mutations_ für GraphQL gibt es in den Dateien
-`extras\restclient\graphql\buch.query.http` und
-`extras\restclient\graphql\buch.mutation.http`.
+`extras\restclient\graphql\monitor.query.http` und
+`extras\restclient\graphql\monitor.mutation.http`.
 
 In der Sandbox kann man z.B. folgende Query absetzen:
 
 ...
 {
-  buch(id: "000000000000000000000001") {
+  monitor(id: "000000000000000000000001") {
     titel
     art
     isbn
@@ -436,11 +436,11 @@ In der Sandbox kann man z.B. folgende Query absetzen:
 }
 ...
 
-Oder unter Verwendung von einer Variablen (hier: `buchId`):
+Oder unter Verwendung von einer Variablen (hier: `monitorId`):
 
 ...
-query ($buchId: ID!) {
-  buch(id: $buchId) {
+query ($monitorId: ID!) {
+  monitor(id: $monitorId) {
     titel
     art
     isbn
@@ -453,7 +453,7 @@ Dazu muss man im unteren Abschnitt _Variables_ folgendes eintragen:
 
 ...
 {
-  "buchId": "000000000000000000000001"
+  "monitorId": "000000000000000000000001"
 }
 ...
 
@@ -551,7 +551,7 @@ z.B.:
 
 ```powershell
     npm exec jest --detectOpenHandles --errorOnDeprecated `
-      --forceExit --runTestsByPath '__tests__\buch\buch-get.controller.test.ts'
+      --forceExit --runTestsByPath '__tests__\monitor\monitor-get.controller.test.ts'
 ```
 
 ---
@@ -569,7 +569,7 @@ Mittels _(Cloud Native) Buildpacks_ und der Konfigurationsdatei `project.toml`
 kann man ein Docker Image erstellen, ohne dass ein Dockerfile erforderlich ist.
 Das resultierende Image basiert auf _Ubuntu_ und erfordert, dass die
 TypeScript-Dateien in JavaScript übersetzt sind. Durch das npm-Skript `pack`
-wird das Docker-Image `docker.io/juergenzimmermann/buch:1.0.0` mit dem implizit
+wird das Docker-Image `docker.io/juergenzimmermann/monitor:1.0.0` mit dem implizit
 übersetzten JavaScript-Code gebaut:
 
 ```powershell
@@ -581,7 +581,7 @@ Wie das Docker-Image gebaut wurde, kann man anschließend mit folgendem Kommando
 inspizieren:
 
 ```powershell
-    pack inspect juergenzimmermann/buch:1.0.0
+    pack inspect juergenzimmermann/monitor:1.0.0
 ```
 
 ### Deployment mit Helm
@@ -590,13 +590,13 @@ Im Verzeichnis `extras\helm` ist ein Helm-Chart für die Entwicklung des
 Appservers. Wenn das Docker-Image erstellt ist (s.o.), kann die Installation in
 Kubernetes durchgeführt werden mit
 
-- `helm install buch . -f values.yaml -f dev.yaml` in `extras\helm`
+- `helm install monitor . -f values.yaml -f dev.yaml` in `extras\helm`
 - `helmfile apply` mittels `helmfile.yaml` im Wurzelverzeichnis
 - `skaffold dev` mittels `skaffold.yaml` im Wurzelverzeichnis
 
 Mit _Lens_ oder _Octant_ kann man anschließend die Installation inspizieren.
 Dabei wird die Logdatei im internen Verzeichnis `/var/log/node` angelegt,
-welches durch _Mounting_ dem Windows-Verzeichnis `C:\Zimmermann\volumes\buch`
+welches durch _Mounting_ dem Windows-Verzeichnis `C:\Zimmermann\volumes\monitor`
 entspricht und mit _Schreibberechtigung_ existieren muss.
 
 Außerdem kann man in `extras\helm` eine Datei `README.md` generieren, die
@@ -606,7 +606,7 @@ Dazu ruft man in `extras\helm` das Kommando `helm-docs` auf.
 Die Installation kann entsprechend der oben gewählten Installationsvariante
 wieder aus Kubernetes entfernt werden:
 
-- `helm uninstall buch` in `extras\helm`
+- `helm uninstall monitor` in `extras\helm`
 - `helmfile destroy` im Wurzelverzeichnis
 - `skaffold delete` bei `skaffold dev`
 
@@ -773,7 +773,7 @@ kostenfrei herunterladen.
 In Anlehnung an die
 [Guidelines von TypeScript](https://github.com/Microsoft/TypeScript/wiki/Coding-guidelines)
 
-- "Feature Filenames", z.B. buch.service.ts
+- "Feature Filenames", z.B. monitor.service.ts
 - Klassennamen mit PascalCase
 - Union-Types (mit Strings) statt Enums
 - Attribute und Funktionen mit camelCase

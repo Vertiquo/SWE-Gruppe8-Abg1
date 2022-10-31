@@ -40,7 +40,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ include "buch.fullname" . }}
+                name: {{ include "monitor.fullname" . }}
                 port:
                   name: http-svc
                   #number: 3000

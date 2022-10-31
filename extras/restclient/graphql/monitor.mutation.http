@@ -57,7 +57,7 @@ mutation {
   login(username: "admin", password: "FALSCH") { token expiresIn roles }
 }
 
-### Neues Buch anlegen
+### Neuen Monitor anlegen
 POST {{graphQlUrl}}
 Content-Type: application/json
 Authorization: Bearer {{login.response.body.$.data.login.token}}
@@ -78,7 +78,7 @@ mutation {
   )
 }
 
-### Neues Buch mit ungueltigen Daten anlegen
+### Neuen Monitor mit ungueltigen Daten anlegen
 POST {{graphQlUrl}}
 Content-Type: application/json
 Authorization: Bearer {{login.response.body.$.data.login.token}}
@@ -99,7 +99,7 @@ mutation {
   )
 }
 
-### Vorhandenes Buch aktualisieren
+### Vorhandenes Monitor aktualisieren
 POST {{graphQlUrl}}
 Content-Type: application/json
 Authorization: Bearer {{login.response.body.$.data.login.token}}
@@ -121,7 +121,7 @@ mutation {
   )
 }
 
-### Vorhandenes Buch mit ungueltigen Werten aktualisieren
+### Vorhandenes Monitor mit ungueltigen Werten aktualisieren
 POST {{graphQlUrl}}
 Content-Type: application/json
 Authorization: Bearer {{login.response.body.$.data.login.token}}
@@ -143,7 +143,7 @@ mutation {
   )
 }
 
-### Nicht-Vorhandenes Buch aktualisieren
+### Nicht-Vorhandenes Monitor aktualisieren
 POST {{graphQlUrl}}
 Content-Type: application/json
 Authorization: Bearer {{login.response.body.$.data.login.token}}
@@ -165,7 +165,7 @@ mutation {
   )
 }
 
-### Vorhandenes Buch loeschen
+### Vorhandenes Monitor loeschen
 POST {{graphQlUrl}}
 Content-Type: application/json
 Authorization: Bearer {{login.response.body.$.data.login.token}}

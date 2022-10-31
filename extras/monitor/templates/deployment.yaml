@@ -19,7 +19,7 @@ apiVersion: apps/v1
 # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#deployment-v1-apps
 kind: Deployment
 metadata:
-  name: {{ include "buch.fullname" . }}
+  name: {{ include "monitor.fullname" . }}
   # Kennzeichen bzw. Markierung
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/labels
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels
@@ -27,14 +27,14 @@ metadata:
   labels:
     # https://helm.sh/docs/chart_template_guide/function_list
     # nindent rueckt um eine bestimmte Anzahl ("n") Zeichen ein
-    {{- include "buch.labels" . | nindent 4 }}
+    {{- include "monitor.labels" . | nindent 4 }}
 spec:
   # https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#selector
   selector:
     # Labels, mit denen z.B. ein Service einen Pod (zu diesem Deployment) identifizieren kann
-    # z.B. fuer:   kubectl delete deployment --selector app=buch --namespace acme
+    # z.B. fuer:   kubectl delete deployment --selector app=monitor --namespace acme
     # i.a. gleicher Wert wie in template.metadata.labels
-    matchLabels: {{- include "buch.selectorLabels" . | nindent 6 }}
+    matchLabels: {{- include "monitor.selectorLabels" . | nindent 6 }}
   # Anzahl laufender Pods fuer das Template zu diesem Deployment (s.u.) -> ReplicaSet
   replicas: {{ .Values.replicaCount }}
   # https://kubernetes.io/docs/concepts/workloads/pods/#pod-templates
@@ -42,7 +42,7 @@ spec:
   template:
     metadata:
       # Labels fuer einen Pod (NICHT fuer dieses Deployment), der durch dieses Deployment installiert wurde
-      labels: {{- include "buch.labels" . | nindent 8 }}
+      labels: {{- include "monitor.labels" . | nindent 8 }}
     # Spezifikation fuer jeden Pod
     spec:
       containers:
@@ -55,7 +55,7 @@ spec:
           envFrom:
             # https://kubernetes.io/docs/concepts/configuration/configmap
             - configMapRef:
-                name: {{ include "buch.fullname" . }}
+                name: {{ include "monitor.fullname" . }}
           env:
             - name: DB_PASS
               valueFrom:
@@ -143,14 +143,14 @@ spec:
             failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
           volumeMounts:
             - mountPath: /var/log/node
-              name: log-{{ include "buch.name" . }}
+              name: log-{{ include "monitor.name" . }}
       volumes:
-        - name: log-{{ include "buch.name" . }}
+        - name: log-{{ include "monitor.name" . }}
           # https://kubernetes.io/docs/concepts/storage/volumes/#hostpath
           hostPath:
-            path: /run/desktop/mnt/host/c/Zimmermann/volumes/{{ include "buch.name" . }}
+            path: /run/desktop/mnt/host/c/Zimmermann/volumes/{{ include "monitor.name" . }}
             type: Directory
           # https://kubernetes.io/docs/concepts/storage/volumes/#emptydir
           #emptyDir: {}
-      serviceAccountName: {{ include "buch.fullname" . }}
+      serviceAccountName: {{ include "monitor.fullname" . }}
       automountServiceAccountToken: false

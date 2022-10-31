@@ -56,7 +56,7 @@ package monitor #DDDDDD {
   }
 
   class "type MonitorDTO = Omit<Monitor, 'aktualisiert' | 'erzeugt' | 'schlagwoerter'> & { schlagwoerter: string[] }" as MonitorDTO
-  hide BuchDTO circle
+  hide MonitorDTO circle
 
   class MonitorMutationResolver << control >> << @Resolver() >> << @UseGuards() >> << @UseInterceptors() >> {
     + @Mutation() @Roles() async create(@Args() monitor: Monitor): Promise<string>

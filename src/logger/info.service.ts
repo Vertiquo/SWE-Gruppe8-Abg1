@@ -54,7 +54,7 @@ export class InfoService implements OnApplicationBootstrap {
             nodeConfig;
         const isK8s = k8sConfig.detected;
         const plattform = isK8s
-            ? `Kubernetes: BUCH_SERVICE_HOST=${serviceHost}, BUCH_SERVICE_PORT=${servicePort}`
+            ? `Kubernetes: MONITOR_SERVICE_HOST=${serviceHost}, MONITOR_SERVICE_PORT=${servicePort}`
             : 'Kubernetes: N/A';
 
         this.#logger.info(this.#stripIndent(this.#banner));

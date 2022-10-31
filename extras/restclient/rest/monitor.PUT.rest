@@ -31,49 +31,49 @@ Content-Type: application/x-www-form-urlencoded
 
 username=admin&password=FALSCH
 
-### Vorhandenes Buch aktualisieren
+### Vorhandenen Monitor aktualisieren
 PUT {{restUrl}}/00000000-0000-0000-0000-000000000040
 Content-Type: application/json
 Authorization: Bearer {{login.response.body.$.token}}
 If-Match: "0"
 
-< .\json\buch-40-put.json
+< .\json\monitor-40-put.json
 
-### NICHT-Vorhandenes Buch aktualisieren
+### NICHT-Vorhandenen Monitor aktualisieren
 PUT {{restUrl}}/99999999-9999-9999-9999-999999999999
 Content-Type: application/json
 Authorization: Bearer {{login.response.body.$.token}}
 If-Match: "0"
 
-< .\json\buch-40-put.json
+< .\json\monitor-40-put.json
 
-### Vorhandenes Buch *OHNE* Versionsnummer aktualisieren
+### Vorhandenen Monitor *OHNE* Versionsnummer aktualisieren
 PUT {{restUrl}}/00000000-0000-0000-0000-000000000040
 Content-Type: application/json
 Authorization: Bearer {{login.response.body.$.token}}
 
-< .\json\buch-40-put.json
+< .\json\monitor-40-put.json
 
-### Vorhandenes Buch mit falscher Versionsnummer aktualisieren
+### Vorhandenen Monitor mit falscher Versionsnummer aktualisieren
 PUT {{restUrl}}/00000000-0000-0000-0000-000000000040
 Content-Type: application/json
 If-Match: 0
 Authorization: Bearer {{login.response.body.$.token}}
 
-< .\json\buch-40-put.json
+< .\json\monitor-40-put.json
 
-### Vorhandenes Buch mit alter Versionsnummer aktualisieren
+### Vorhandenen Monitor mit alter Versionsnummer aktualisieren
 PUT {{restUrl}}/00000000-0000-0000-0000-000000000040
 Content-Type: application/json
 If-Match: "-1"
 Authorization: Bearer {{login.response.body.$.token}}
 
-< .\json\buch-40-put.json
+< .\json\monitor-40-put.json
 
-### Vorhandenes Buch mit ungueltigen Daten aktualisieren
+### Vorhandenen Monitor mit ungueltigen Daten aktualisieren
 PUT {{restUrl}}/00000000-0000-0000-0000-000000000040
 Content-Type: application/json
 Authorization: Bearer {{login.response.body.$.token}}
 If-Match: "0"
 
-< .\json\buch-40-put-invalid.json
+< .\json\monitor-40-put-invalid.json
