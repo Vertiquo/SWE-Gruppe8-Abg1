@@ -137,29 +137,38 @@ export class MonitorMutationResolver {
 
     #errorMsgCreateMonitor(err: CreateError): string {
         switch (err.type) {
-            case 'ConstraintViolations':
+            case 'ConstraintViolations': {
                 return err.messages.join(' ');
-            case 'NameExists':
+            }
+            case 'NameExists': {
                 return `Der Name "${err.name}" existiert bereits`;
-            default:
+            }
+            default: {
                 return 'Unbekannter Fehler';
+            }
         }
     }
 
     #errorMsgUpdateMonitor(err: UpdateError): string {
         switch (err.type) {
-            case 'ConstraintViolations':
+            case 'ConstraintViolations': {
                 return err.messages.join(' ');
-            case 'NameExists':
+            }
+            case 'NameExists': {
                 return `Der Name "${err.name}" existiert bereits`;
-            case 'MonitorNotExists':
+            }
+            case 'MonitorNotExists': {
                 return `Es gibt kein Monitor mit der ID ${err.id}`;
-            case 'VersionInvalid':
+            }
+            case 'VersionInvalid': {
                 return `"${err.version}" ist keine gueltige Versionsnummer`;
-            case 'VersionOutdated':
+            }
+            case 'VersionOutdated': {
                 return `Die Versionsnummer "${err.version}" ist nicht mehr aktuell`;
-            default:
+            }
+            default: {
                 return 'Unbekannter Fehler';
+            }
         }
     }
 }
