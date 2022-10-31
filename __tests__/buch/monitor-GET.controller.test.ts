@@ -25,15 +25,15 @@ import {
     shutdownServer,
     startServer,
 } from '../testserver.js';
-import { type BuecherModel } from '../../src/buch/rest/buch-get.controller.js';
 import { HttpStatus } from '@nestjs/common';
+import { type MonitoreModel } from '../../src/monitor/rest/monitor-get.controller.js';
 import each from 'jest-each';
 
 // -----------------------------------------------------------------------------
 // T e s t d a t e n
 // -----------------------------------------------------------------------------
-const titelVorhanden = ['a', 't', 'g'];
-const titelNichtVorhanden = ['xx', 'yy'];
+const nameVorhanden = ['a', 't', 'g'];
+const nameNichtVorhanden = ['xx', 'yy'];
 const schlagwoerterVorhanden = ['javascript', 'typescript'];
 const schlagwoerterNichtVorhanden = ['csharp', 'php'];
 
@@ -60,11 +60,11 @@ describe('GET /', () => {
         await shutdownServer();
     });
 
-    test('Alle Buecher', async () => {
+    test('Alle Monitore', async () => {
         // given
 
         // when
-        const response: AxiosResponse<BuecherModel> = await client.get('/');
+        const response: AxiosResponse<MonitoreModel> = await client.get('/');
 
         // then
         const { status, headers, data } = response;
@@ -73,24 +73,24 @@ describe('GET /', () => {
         expect(headers['content-type']).toMatch(/json/iu);
         expect(data).toBeDefined();
 
-        const { buecher } = data._embedded;
+        const { monitore } = data._embedded;
 
-        buecher
-            .map((buch) => buch._links.self.href)
+        monitore
+            .map((monitor) => monitor._links.self.href)
             .forEach((selfLink) => {
                 // eslint-disable-next-line security/detect-non-literal-regexp, security-node/non-literal-reg-expr
                 expect(selfLink).toMatch(new RegExp(`^${baseURL}`, 'u'));
             });
     });
 
-    each(titelVorhanden).test(
-        'Buecher mit einem Titel, der "%s" enthaelt',
-        async (teilTitel: string) => {
+    each(nameVorhanden).test(
+        'Monitore mit einem Namen, der "%s" enthaelt',
+        async (teilName: string) => {
             // given
-            const params = { titel: teilTitel };
+            const params = { name: teilName };
 
             // when
-            const response: AxiosResponse<BuecherModel> = await client.get(
+            const response: AxiosResponse<MonitoreModel> = await client.get(
                 '/',
                 { params },
             );
@@ -102,24 +102,24 @@ describe('GET /', () => {
             expect(headers['content-type']).toMatch(/json/iu);
             expect(data).toBeDefined();
 
-            const { buecher } = data._embedded;
+            const { monitore } = data._embedded;
 
-            // Jedes Buch hat einen Titel mit dem Teilstring 'a'
-            buecher
-                .map((buch) => buch.titel)
-                .forEach((titel: string) =>
-                    expect(titel.toLowerCase()).toEqual(
-                        expect.stringContaining(teilTitel),
+            // Jeder Monitor hat einen Namen mit dem Teilstring 'a'
+            monitore
+                .map((monitor) => monitor.name)
+                .forEach((name: string) =>
+                    expect(name.toLowerCase()).toEqual(
+                        expect.stringContaining(teilName),
                     ),
                 );
         },
     );
 
-    each(titelNichtVorhanden).test(
-        'Keine Buecher mit einem Titel, der "%s" enthaelt',
-        async (teilTitel: string) => {
+    each(nameNichtVorhanden).test(
+        'Keine Monitore mit einem Namen, der "%s" enthaelt',
+        async (teilName: string) => {
             // given
-            const params = { titel: teilTitel };
+            const params = { name: teilName };
 
             // when
             const response: AxiosResponse<string> = await client.get('/', {
@@ -135,13 +135,13 @@ describe('GET /', () => {
     );
 
     each(schlagwoerterVorhanden).test(
-        'Mind. 1 Buch mit dem Schlagwort "%s"',
+        'Mind. 1 Monitor mit dem Schlagwort "%s"',
         async (schlagwort: string) => {
             // given
             const params = { [schlagwort]: 'true' };
 
             // when
-            const response: AxiosResponse<BuecherModel> = await client.get(
+            const response: AxiosResponse<MonitoreModel> = await client.get(
                 '/',
                 { params },
             );
@@ -154,11 +154,11 @@ describe('GET /', () => {
             // JSON-Array mit mind. 1 JSON-Objekt
             expect(data).toBeDefined();
 
-            const { buecher } = data._embedded;
+            const { monitore } = data._embedded;
 
-            // Jedes Buch hat im Array der Schlagwoerter z.B. "javascript"
-            buecher
-                .map((buch) => buch.schlagwoerter)
+            // Jedes Monitor hat im Array der Schlagwoerter z.B. "javascript"
+            monitore
+                .map((monitor) => monitor.schlagwoerter)
                 .forEach((schlagwoerter) =>
                     expect(schlagwoerter).toEqual(
                         expect.arrayContaining([schlagwort.toUpperCase()]),
@@ -168,7 +168,7 @@ describe('GET /', () => {
     );
 
     each(schlagwoerterNichtVorhanden).test(
-        'Keine Buecher mit dem Schlagwort "%s"',
+        'Keine Monitore mit dem Schlagwort "%s"',
         async (schlagwort: string) => {
             // given
             const params = { [schlagwort]: 'true' };
@@ -186,7 +186,7 @@ describe('GET /', () => {
         },
     );
 
-    test('Keine Buecher zu einer nicht-vorhandenen Property', async () => {
+    test('Keine Monitore zu einer nicht-vorhandenen Property', async () => {
         // given
         const params = { foo: 'bar' };
 
