@@ -39,8 +39,8 @@ import {
     shutdownServer,
     startServer,
 } from '../testserver.js';
-import { type BuchModel } from '../../src/buch/rest/buch-get.controller.js';
 import { HttpStatus } from '@nestjs/common';
+import { type MonitorModel } from '../../src/monitor/rest/monitor-get.controller.js';
 import each from 'jest-each';
 
 // -----------------------------------------------------------------------------
@@ -74,24 +74,27 @@ describe('GET /:id', () => {
         await shutdownServer();
     });
 
-    each(idVorhanden).test('Buch zu vorhandener ID %s', async (id: string) => {
-        // given
-        const url = `/${id}`;
+    each(idVorhanden).test(
+        'Monitor zu vorhandener ID %s',
+        async (id: string) => {
+            // given
+            const url = `/${id}`;
 
-        // when
-        const response: AxiosResponse<BuchModel> = await client.get(url);
+            // when
+            const response: AxiosResponse<MonitorModel> = await client.get(url);
 
-        // then
-        const { status, headers, data } = response;
+            // then
+            const { status, headers, data } = response;
 
-        expect(status).toBe(HttpStatus.OK);
-        expect(headers['content-type']).toMatch(/json/iu);
+            expect(status).toBe(HttpStatus.OK);
+            expect(headers['content-type']).toMatch(/json/iu);
 
-        // eslint-disable-next-line no-underscore-dangle
-        const selfLink = data._links.self.href;
+            // eslint-disable-next-line no-underscore-dangle
+            const selfLink = data._links.self.href;
 
-        // https://jestjs.io/docs/next/snapshot-testing
-        // https://medium.com/swlh/easy-integration-testing-of-graphql-apis-with-jest-63288d0ad8d7
-        expect(selfLink).toMatchSnapshot();
-    });
+            // https://jestjs.io/docs/next/snapshot-testing
+            // https://medium.com/swlh/easy-integration-testing-of-graphql-apis-with-jest-63288d0ad8d7
+            expect(selfLink).toMatchSnapshot();
+        },
+    );
 });
