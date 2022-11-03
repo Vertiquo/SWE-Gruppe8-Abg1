@@ -66,7 +66,7 @@ export const jsonSchema: GenericJsonSchema = {
         erzeugt: { type: ['string', 'null'] },
         aktualisiert: { type: ['string', 'null'] },
     },
-    required: ['name', 'verlag', 'preis', 'isbn'],
+    required: ['name', 'hersteller', 'preis'],
     additionalProperties: false,
     errorMessage: {
         properties: {
