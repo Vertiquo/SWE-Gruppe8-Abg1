@@ -26,7 +26,6 @@ import {
 } from '../testserver.js';
 import { HttpStatus } from '@nestjs/common';
 import { ID_PATTERN } from '../../src/monitor/service/monitor-validation.service.js';
-import { MAX_RATING } from '../../src/monitor/service/jsonSchema.js';
 import { type MonitorDTO } from '../../src/monitor/rest/monitor-write.controller.js';
 import { loginRest } from '../login.js';
 
