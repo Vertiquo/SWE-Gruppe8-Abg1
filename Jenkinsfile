@@ -77,7 +77,7 @@ pipeline {
 
                 // https://www.jenkins.io/doc/pipeline/steps/git
                 // "named arguments" statt Funktionsaufruf mit Klammern
-                git url: 'https://github.com/?????', branch: 'main', poll: true
+                git url: 'https://github.com/Vertiquo/SWE-Gruppe8-Abg1', branch: 'main', poll: true
             }
         }
 
