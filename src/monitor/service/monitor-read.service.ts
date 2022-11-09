@@ -151,8 +151,8 @@ export class MonitorReadService {
         keys.forEach((key) => {
             if (
                 !this.#monitorProps.includes(key) &&
-                key !== 'javascript' &&
-                key !== 'typescript'
+                key !== 'highres' &&
+                key !== 'slim'
             ) {
                 this.#logger.debug(
                     '#find: ungueltiges Suchkriterium "%s"',
