@@ -22,7 +22,7 @@ schema {
 
 "Funktionen, um Monitor zu lesen"
 type Query {
-  monitore(titel: String): [Monitor!]
+  monitore(name: String): [Monitor!]
 
   monitor(id: ID!): Monitor
 }
