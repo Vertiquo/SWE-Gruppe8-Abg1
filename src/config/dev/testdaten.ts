@@ -120,32 +120,32 @@ export const schlagwoerter: Schlagwort[] = [
     {
         id: '00000000-0000-0000-0000-010000000001',
         monitor: monitore[0],
-        schlagwort: 'highres',
+        schlagwort: 'HIGHRES',
     },
     {
         id: '00000000-0000-0000-0000-020000000001',
         monitor: monitore[1],
-        schlagwort: 'slim',
+        schlagwort: 'SLIM',
     },
     {
         id: '00000000-0000-0000-0000-030000000001',
         monitor: monitore[2],
-        schlagwort: 'highres',
+        schlagwort: 'HIGHRES',
     },
     {
         id: '00000000-0000-0000-0000-030000000002',
         monitor: monitore[2],
-        schlagwort: 'slim',
+        schlagwort: 'SLIM',
     },
     {
         id: '00000000-0000-0000-0000-500000000001',
         monitor: monitore[4],
-        schlagwort: 'slim',
+        schlagwort: 'SLIM',
     },
     {
         id: '00000000-0000-0000-0000-600000000001',
         monitor: monitore[5],
-        schlagwort: 'slim',
+        schlagwort: 'SLIM',
     },
 ];
 
