@@ -158,7 +158,7 @@ export class MonitorMutationResolver {
                 return `Der Name "${err.name}" existiert bereits`;
             }
             case 'MonitorNotExists': {
-                return `Es gibt kein Monitor mit der ID ${err.id}`;
+                return `Es gibt keinen Monitor mit der ID ${err.id}`;
             }
             case 'VersionInvalid': {
                 return `"${err.version}" ist keine gueltige Versionsnummer`;
