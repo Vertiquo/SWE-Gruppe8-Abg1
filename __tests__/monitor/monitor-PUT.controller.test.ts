@@ -56,10 +56,10 @@ const idNichtVorhanden = '99999999-9999-9999-9999-999999999999';
 
 const geaenderterMonitorInvalid: Record<string, unknown> = {
     name: '?!$',
-    hersteller: 'UNSICHTBAR',
+    hersteller: '?!$',
     preis: -0.01,
     bestand: -1,
-    curved: true,
+    curved: 1,
     refreshrate: '-1',
     release: 'f12345-123-123',
 };
@@ -167,13 +167,13 @@ describe('PUT /:id', () => {
         expect(status).toBe(HttpStatus.UNPROCESSABLE_ENTITY);
         expect(data).toEqual(
             expect.arrayContaining([
-                'Ein Monitorname muss mit einem Buchstaben, einer Ziffer oder _ beginnen.',
-                'Der Hersteller muss einer vorher festgelegten Auswahl entsprechen.',
-                'Der Preis eines Monitors kann nicht negativ sein.',
-                'Der Bestand kann nicht negativ sein.',
-                'Der Monitor kann entweder gebogen sein, oder nicht.',
-                'Die Aktualisierungsrate ist nicht korrekt.',
-                'Das Datum muss im Format yyyy-MM-dd sein.',
+                'Der Monitorname muss mit einem Buchstaben, einer Ziffer oder _ beginnen.',
+                'Der Herstellername muss mit einem Buchstaben, einer Ziffer oder _ beginnen.',
+                'Der Preis darf nicht negativ sein.',
+                'Der Bestand darf nicht negativ sein.',
+                "Das Attribut 'curved' muss ein boolean Wert (true/false) sein.",
+                'Die Bildwiederholungsfrequenz muss einer der folgenden Werte sein: (Hz60 | Hz120 | Hz144 | Hz240).',
+                'Das Releasedatum muss im Format yyyy-MM-dd sein.',
             ]),
         );
     });
@@ -220,7 +220,7 @@ describe('PUT /:id', () => {
         expect(data).toEqual(expect.stringContaining('Die Versionsnummer'));
     });
 
-    test('Vorhandenes Buch aendern, aber ohne Token', async () => {
+    test('Vorhandenen Monitor aendern, aber ohne Token', async () => {
         // given
         const url = `/${idVorhanden}`;
         delete headers.Authorization;
