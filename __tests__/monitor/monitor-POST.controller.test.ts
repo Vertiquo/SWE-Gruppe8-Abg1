@@ -46,7 +46,7 @@ const neuerMonitorInvalid: Record<string, unknown> = {
     name: '!?$',
     hersteller: '!!!',
     preis: -100.99,
-    bestand: 1.2,
+    bestand: -2,
     curved: true,
     refreshrate: '123',
     release: '123456123456',
