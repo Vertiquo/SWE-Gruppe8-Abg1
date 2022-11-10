@@ -71,9 +71,9 @@ mutation {
       preis: 99.9,
       bestand: 2,
       curved: true,
-      refreshrate: "Hz60",
+      refreshrate: Hz60,
       release: "2022-01-31",
-      schlagwoerter: ["highres"]
+      schlagwoerter: ["HIGHRES"]
     }
   )
 }
@@ -94,12 +94,12 @@ mutation {
       curved: true,
       refreshrate: "61",
       release: "123",
-      schlagwoerter: ["highres"]
+      schlagwoerter: ["HIGHRES"]
     }
   )
 }
 
-### Vorhandenes Monitor aktualisieren
+### Vorhandenen Monitor aktualisieren
 POST {{graphQlUrl}}
 Content-Type: application/json
 Authorization: Bearer {{login.response.body.$.data.login.token}}
@@ -109,19 +109,19 @@ mutation {
   update(
     input: {
       id: "00000000-0000-0000-0000-000000000003",
+      version: 0,
       name: "ChngMonGraphQL",
       hersteller: "ChngHerGraphQL",
       preis: 77.7,
       bestand: 7,
       curved: true,
-      refreshrate: "Hz120",
+      refreshrate: Hz120,
       release: "2022-02-02",
-      schlagwoerter: ["highres"]
     }
   )
 }
 
-### Vorhandenes Monitor mit ungueltigen Werten aktualisieren
+### Vorhandenen Monitor mit ungueltigen Werten aktualisieren
 POST {{graphQlUrl}}
 Content-Type: application/json
 Authorization: Bearer {{login.response.body.$.data.login.token}}
@@ -131,6 +131,7 @@ mutation {
   update(
     input: {
       id: "00000000-0000-0000-0000-000000000003",
+      version: 0,
       name: "???",
       hersteller: "!!!",
       preis: -800,
@@ -138,12 +139,11 @@ mutation {
       curved: true,
       refreshrate: "123",
       release: "321",
-      schlagwoerter: ["highres"]
     }
   )
 }
 
-### Nicht-Vorhandenes Monitor aktualisieren
+### Nicht-Vorhandenen Monitor aktualisieren
 POST {{graphQlUrl}}
 Content-Type: application/json
 Authorization: Bearer {{login.response.body.$.data.login.token}}
@@ -153,19 +153,19 @@ mutation {
   update(
     input: {
       id: "99999999-9999-9999-9999-999999999999",
+      version: 0,
       name: "ChngMonGraphQL",
       hersteller: "ChngHerGraphQL",
       preis: 77.7,
       bestand: 7,
       curved: true,
-      refreshrate: "Hz120",
+      refreshrate: Hz120,
       release: "2022-02-02",
-      schlagwoerter: ["highres"]
     }
   )
 }
 
-### Vorhandenes Monitor loeschen
+### Vorhandenen Monitor loeschen
 POST {{graphQlUrl}}
 Content-Type: application/json
 Authorization: Bearer {{login.response.body.$.data.login.token}}
