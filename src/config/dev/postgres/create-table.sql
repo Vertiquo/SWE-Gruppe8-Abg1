@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS monitor (
 CREATE TABLE IF NOT EXISTS schlagwort (
     id            char(36) PRIMARY KEY USING INDEX TABLESPACE monitorspace,
     monitor_id    char(36) NOT NULL REFERENCES monitor,
-    schlagwort varchar(16) NOT NULL CHECK (schlagwort ~ 'highres|slim')
+    schlagwort varchar(16) NOT NULL CHECK (schlagwort ~ 'HIGHRES|SLIM')
 ) TABLESPACE monitorspace;
 
 -- default: btree

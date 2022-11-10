@@ -52,10 +52,10 @@ GET {{restUrl}}?hersteller=xxx
 ### Suche mit vorhandenen Schlagwoertern
 GET {{restUrl}}?highres=true&slim=true
 
-### Suche mit vorhandenem Schlagwort "JAVASCRIPT"
+### Suche mit vorhandenem Schlagwort "HIGHRES"
 GET {{restUrl}}?highres=true
 
-### Suche mit vorhandenem Schlagwort "TYPESCRIPT"
+### Suche mit vorhandenem Schlagwort "SLIM"
 GET {{restUrl}}?slim=true
 
 ### Suche mit nicht-vorhandener Property

@@ -95,7 +95,7 @@ export class Monitor {
         eager: true,
         cascade: ['insert'],
     })
-    @ApiProperty({ example: ['highres', 'slim'] })
+    @ApiProperty({ example: ['HIGHRES', 'SLIM'] })
     readonly schlagwoerter!: Schlagwort[];
 
     @CreateDateColumn({ type: 'timestamp' })

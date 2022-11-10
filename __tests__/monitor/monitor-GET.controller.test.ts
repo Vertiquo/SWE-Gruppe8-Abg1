@@ -34,7 +34,7 @@ import each from 'jest-each';
 // -----------------------------------------------------------------------------
 const nameVorhanden = ['a', 't', 'g'];
 const nameNichtVorhanden = ['xx', 'yy'];
-const schlagwoerterVorhanden = ['javascript', 'typescript'];
+const schlagwoerterVorhanden = ['highres', 'slim'];
 const schlagwoerterNichtVorhanden = ['csharp', 'php'];
 
 // -----------------------------------------------------------------------------
@@ -79,7 +79,7 @@ describe('GET /', () => {
             .map((monitor) => monitor._links.self.href)
             .forEach((selfLink) => {
                 // eslint-disable-next-line security/detect-non-literal-regexp, security-node/non-literal-reg-expr
-                expect(selfLink).toMatch(new RegExp(`^${baseURL}`, 'u'));
+                expect(selfLink).toMatch(new RegExp(`^${baseURL}`, 'iu'));
             });
     });
 
@@ -156,7 +156,7 @@ describe('GET /', () => {
 
             const { monitore } = data._embedded;
 
-            // Jedes Monitor hat im Array der Schlagwoerter z.B. "javascript"
+            // Jedes Monitor hat im Array der Schlagwoerter z.B. "slim"
             monitore
                 .map((monitor) => monitor.schlagwoerter)
                 .forEach((schlagwoerter) =>
