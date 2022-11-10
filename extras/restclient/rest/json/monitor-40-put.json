@@ -4,6 +4,6 @@
   "preis": 99.99,
   "bestand": 5,
   "curved": true,
-  "refreshrate": 144,
+  "refreshrate": "Hz144",
   "release": "2022-01-31"
 }
