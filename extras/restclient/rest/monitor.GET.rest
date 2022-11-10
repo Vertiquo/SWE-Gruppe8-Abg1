@@ -62,7 +62,7 @@ GET {{restUrl}}?slim=true
 GET {{restUrl}}?php=true
 
 ### Suche mit gueltiger Bildwiederholungsfrequenz.
-GET {{restUrl}}?refreshrate=144
+GET {{restUrl}}?refreshrate=Hz144
 
 ### Suche mit ungueltiger Bildwiederholungsfrequenz.
 GET {{restUrl}}?refreshrate=123
