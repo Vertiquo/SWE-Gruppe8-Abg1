@@ -29,7 +29,7 @@ If-None-Match: "0"
 
 ### Suche mit vorhandener Monitor-ID und falscher Versionsnummer
 GET {{restUrl}}/00000000-0000-0000-0000-000000000001
-If-None-Match: 0
+If-None-Match: "1"
 
 ### Suche mit ungueltiger Monitor-ID
 GET {{restUrl}}/YYYYYYYY-YYYY-YYYY-YYYY-YYYYYYYYYYYY
@@ -43,11 +43,11 @@ GET {{restUrl}}?name=a
 ### Suche mit nicht-vorhandenem Namen
 GET {{restUrl}}?name=xxx
 
-### Suche mit vorhandenem Herstellernamen
-GET {{restUrl}}?hersteller=HerGraphQL
+### Suche mit vorhandenem boolean Attribut curved
+GET {{restUrl}}?curved=true
 
-### Suche mit nicht vorhandenem Herstellernamen
-GET {{restUrl}}?hersteller=xxx
+### Suche mit nicht vorhandenem boolean Attribut curved
+GET {{restUrl}}?curved=false
 
 ### Suche mit vorhandenen Schlagwoertern
 GET {{restUrl}}?highres=true&slim=true
