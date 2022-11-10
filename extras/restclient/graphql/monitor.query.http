@@ -81,7 +81,7 @@ query ($name: String = "Alpha") {
   "name": "Alpha"
 }
 
-### Suche name, art und schlagwoerter von Monitoren mit vorhandenem Titel
+### Suche name, hersteller und schlagwoerter von Monitoren mit vorhandenem Titel
 POST {{graphQlUrl}}
 Content-Type: application/json
 X-REQUEST-TYPE: GraphQL
@@ -89,7 +89,7 @@ X-REQUEST-TYPE: GraphQL
 query ($name: String = "a") {
   monitore(name: $name) {
     name
-    art
+    hersteller
     schlagwoerter
   }
 }
