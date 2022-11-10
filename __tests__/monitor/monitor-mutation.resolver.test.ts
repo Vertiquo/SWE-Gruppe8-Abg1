@@ -69,14 +69,14 @@ describe('GraphQL Mutations', () => {
                 mutation {
                     create(
                         input: {
-                            name: 'Geaendert',
-                            hersteller: 'PHILIPS',
+                            name: "GeaendertMonitor1",
+                            hersteller: "PHILIPS",
                             preis: 44.4,
                             bestand: 10,
                             curved: true,
-                            refreshrate: 'Hz60',
-                            release: '2022-02-03',
-                            schlagwoerter: ["PHILIPS"],
+                            refreshrate: Hz60,
+                            release: "2022-02-03",
+                            schlagwoerter: ["highres"],
                         }
                     )
                 }
@@ -114,14 +114,14 @@ describe('GraphQL Mutations', () => {
                 mutation {
                     create(
                         input: {
-                            name: 'Nichtadmin',
-                            hersteller: 'PHILIPS',
+                            name: "Nichtadmin",
+                            hersteller: "PHILIPS",
                             preis: 44.4,
                             bestand: 10,
                             curved: true,
-                            refreshrate: 'Hz60',
-                            release: '2022-02-03',
-                            schlagwoerter: ["PHILIPS"],
+                            refreshrate: Hz60,
+                            release: "2022-02-03",
+                            schlagwoerter: ["highres"],
                         }
                     )
                 }
@@ -164,13 +164,14 @@ describe('GraphQL Mutations', () => {
                     update(
                         input: {
                             id: "00000000-0000-0000-0000-000000000003",
-                            name: 'Geaendert',
-                            hersteller: 'PHILIPS',
+                            version: 0,
+                            name: "GeaendertMonitor2",
+                            hersteller: "PHILIPS",
                             preis: 44.4,
                             bestand: 10,
                             curved: true,
-                            refreshrate: 'Hz60',
-                            release: '2022-02-03',
+                            refreshrate: Hz60,
+                            release: "2022-02-03",  
                         }
                     )
                 }
@@ -209,13 +210,14 @@ describe('GraphQL Mutations', () => {
                     update(
                         input: {
                             id: "00000000-0000-0000-0000-000000000003",
-                            name: '?!$',
-                            hersteller: 'UNSICHTBAR',
-                            preis: -0.01,
+                            version: 1,
+                            name: "?!$",
+                            hersteller: "?!$",
+                            preis: -20,
                             bestand: -1,
-                            curved: true,
-                            refreshrate: '-1',
-                            release: 'f12345-123-123',
+                            curved: false,
+                            refreshrate: Hz60,
+                            release: "123",
                         }
                     )
                 }
@@ -246,30 +248,18 @@ describe('GraphQL Mutations', () => {
         expect(message).toEqual(expect.stringContaining(' Monitorname '));
         expect(message).toEqual(
             expect.stringContaining(
-                'Der Hersteller muss einer vorher festgelegten Auswahl entsprechen.',
+                'Der Herstellername muss mit einem Buchstaben, einer Ziffer oder _ beginnen.',
             ),
         );
         expect(message).toEqual(
-            expect.stringContaining(
-                'Der Preis eines Monitors kann nicht negativ sein.',
-            ),
+            expect.stringContaining('Der Preis darf nicht negativ sein.'),
         );
         expect(message).toEqual(
-            expect.stringContaining('Der Bestand kann nicht negativ sein.'),
-        );
-        expect(message).toEqual(
-            expect.stringContaining(
-                'Der Monitor kann entweder gebogen sein, oder nicht.',
-            ),
+            expect.stringContaining('Der Bestand darf nicht negativ sein.'),
         );
         expect(message).toEqual(
             expect.stringContaining(
-                'Die Aktualisierungsrate kann nicht negativ sein.',
-            ),
-        );
-        expect(message).toEqual(
-            expect.stringContaining(
-                'Das Datum muss im Format yyyy-MM-dd sein.',
+                'Das Releasedatum muss im Format yyyy-MM-dd sein.',
             ),
         );
         expect(path).toBeDefined();
@@ -290,13 +280,14 @@ describe('GraphQL Mutations', () => {
                     update(
                         input: {
                             id: "${id}",
-                            name: 'Nichtvorhanden',
-                            hersteller: 'PHILIPS',
+                            version: 0,
+                            name: "Nichtvorhanden",
+                            hersteller: "PHILIPS",
                             preis: 44.4,
                             bestand: 10,
                             curved: true,
-                            refreshrate: 'Hz60',
-                            release: '2022-02-03',
+                            refreshrate: Hz60,
+                            release: "2022-02-03",
                         }
                     )
                 }
