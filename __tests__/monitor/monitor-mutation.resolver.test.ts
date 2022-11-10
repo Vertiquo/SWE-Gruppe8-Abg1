@@ -76,7 +76,7 @@ describe('GraphQL Mutations', () => {
                             curved: true,
                             refreshrate: Hz60,
                             release: "2022-02-03",
-                            schlagwoerter: ["highres"],
+                            schlagwoerter: ["SLIM"],
                         }
                     )
                 }

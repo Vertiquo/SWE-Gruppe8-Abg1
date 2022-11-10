@@ -40,7 +40,7 @@ const neuerMonitor: MonitorDTO = {
     curved: true,
     refreshrate: 'Hz144',
     release: '2022-01-31',
-    schlagwoerter: ['highres', 'slim'],
+    schlagwoerter: ['HIGHRES', 'SLIM'],
 };
 const neuerMonitorInvalid: Record<string, unknown> = {
     name: '!?$',
