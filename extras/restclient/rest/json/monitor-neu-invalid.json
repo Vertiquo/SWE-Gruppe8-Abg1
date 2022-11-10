@@ -5,5 +5,6 @@
   "bestand": 0.2,
   "curved": false,
   "refreshrate": 123,
-  "release": "12345-123-123"
+  "release": "12345-123-123",
+  "schlagwoerter": ["HIGHRES", "SLIM"]
 }
